@@ -65,6 +65,7 @@ public class Kkuing : MonoBehaviour
         TextTime.text = "Time: " + term;
         if(term <= 0f) End();
     }
+
     void LateUpdate(){
         // 운석 리스트
         GameObject[] meteorites = GameObject.FindGameObjectsWithTag("Asteroid");

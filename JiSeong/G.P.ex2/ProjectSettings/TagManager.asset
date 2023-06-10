@@ -8,11 +8,12 @@ TagManager:
   - Rabbit
   - Hat
   - TeaCup
+  - Image
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - item
   - Water
   - UI
   - 

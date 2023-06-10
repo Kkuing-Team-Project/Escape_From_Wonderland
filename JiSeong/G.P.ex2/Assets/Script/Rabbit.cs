@@ -19,12 +19,4 @@ public class Rabbit : MonoBehaviour
         rigid.velocity = new Vector2(-3, rigid.velocity.y);
     }
 
-    void OnTriggerEnter2D(Collider2D o)
-    {
-        if (o.gameObject.CompareTag("Player"))
-        {
-            print("ÇÇÇØ");
-            Destroy(gameObject);
-        }
-    }
 }

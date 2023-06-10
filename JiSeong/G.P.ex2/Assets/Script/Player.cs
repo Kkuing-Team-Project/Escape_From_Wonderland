@@ -1,61 +1,96 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance; // 인스턴스
+    public GameObject[] PalyerUIHp;
+    // public Image damageImage; // 피 효과
+    public Color flashColour = new Color(1f, 0f, 0f, 0.2f); // 충격 데미지 색깔
+
+    public float speed;
+    public int walkcount;
+    public int PlayerHp = 3;
+    public int RabbitHp;
+    public int RabbitDmg = 1;
+
+    private Vector3 vector;
+    private Animator animator;
+    private int currentWalkCount;
+    private float term = 0f;
+    private bool canMove = true;
+
     float timeImpactTimer = 0;
-    float Heart = 3;
+
     bool eatTime = false;
     bool defense = false;
     bool tea = false;
-    Collider2D coll;
-    SpriteRenderer spriter;
+
+    private Collider2D coll;
+    private SpriteRenderer spriter;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
+        instance = this;
+    }
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
+
+        Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
+        damageImage.color = new Color(0f, 0f, 0f, 0f);
     }
 
-    public float speed;
-    private Vector3 vector;
-    private int currentWalkCount;
-    public int walkcount;
-    private bool canMove = true;
-    private Animator animator;
-    // Start is called before the first frame update
-
-    void OnTriggerEnter2D(Collider2D T)
+    private void Update()
     {
-        if (T.gameObject.CompareTag("Time"))
+        if (canMove)
         {
-            print("시계먹음");
-            eatTime = true;
-        }
-        if (T.gameObject.CompareTag("Hat"))
-        {
-            print("모자먹음");
-            defense = true;
-        }
-        if (T.gameObject.CompareTag("TeaCup"))
-        {
-            print("찻잔먹음");
-            tea = true;
-        }
-        if (defense == true)
-        {
-            if (T.gameObject.CompareTag("Rabbit"))
+            if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
-                print("방어");
-                defense = false;
+                canMove = false;
+                StartCoroutine(MoveCoroutine());
             }
         }
-    }
+        if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("run attack"))
+        {
+            animator.SetTrigger("run attack");
+        }
 
-    void Start()
-    {
-        animator = GetComponent<Animator>();
+        if (timeImpactTimer > 0)
+        {
+            timeImpactTimer -= Time.deltaTime;
+            coll.enabled = false;
+
+        }
+        else
+        {
+            coll.enabled = true;
+            spriter.color = new Color(1, 1, 1, 1);
+        }
+        if (eatTime && Input.GetKeyDown(KeyCode.E))
+        {
+            print("시계 사용");
+            timeImpactTimer = 2;
+            eatTime = false;
+            spriter.color = new Color(1, 1, 1, 0.5f);
+        }
+        if (tea && Input.GetKeyDown(KeyCode.R))
+        {
+            print("찻잔 사용");
+            tea = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            print("카드사용");
+        }
     }
 
     IEnumerator MoveCoroutine()
@@ -88,48 +123,107 @@ public class Player : MonoBehaviour
         animator.SetBool("Walking", false);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(canMove)
+        // 아이템 충돌 tage
+        if (collision.gameObject.CompareTag("Time"))
         {
-            if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-            {
-                canMove = false;
-                StartCoroutine(MoveCoroutine());
-            }
+            Destroy(collision.gameObject);
+            print("시계먹음");
+            eatTime = true;
         }
-        if(Input.GetKeyDown(KeyCode.Q)&& !animator.GetCurrentAnimatorStateInfo(0).IsName("run attack"))
+        if (collision.gameObject.CompareTag("Hat"))
         {
-            animator.SetTrigger("run attack");
+            Destroy(collision.gameObject);
+            print("모자먹음");
+            defense = true;
+        }
+        if (collision.gameObject.CompareTag("TeaCup"))
+        {
+            Destroy(collision.gameObject);
+            print("찻잔먹음");
+            tea = true;
         }
 
-        if (timeImpactTimer > 0)
+        // 적들과 충돌 처리
+        
+        if (collision.gameObject.CompareTag("Rabbit"))
         {
-            timeImpactTimer -= Time.deltaTime;
-            coll.enabled = false;
-            
+            if (defense == true) defense = false;
+
+            else
+            {
+                Destroy(collision.gameObject);
+                TakeDamage(RabbitDmg);
+                ActivateDamageImage();
+            }
         }
-        else
+
+    }
+    private void ActivateDamageImage()
+    {
+        Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
+
+        if (damageImage != null)
         {
-            coll.enabled = true;
-            spriter.color = new Color(1, 1, 1, 1);
+            damageImage.color = flashColour; // 데미지를 입으면 붉은색 화면
+            StartCoroutine(DelayedDisableDamageImage());
         }
-        if (eatTime&&Input.GetKeyDown(KeyCode.E))
+    }
+
+    private IEnumerator DelayedDisableDamageImage() // 코루틴
+    {
+        Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
+        yield return new WaitForSeconds(0.5f);
+
+        damageImage.color = new Color(0f, 0f, 0f, 0f);
+    }
+
+    private void TakeDamage(int damageAmount)
+    {
+        PlayerHp -= damageAmount;
+        if (PlayerHp == 2)
         {
-            print("시계 사용");
-            timeImpactTimer = 2;
-            eatTime = false;
-            spriter.color = new Color(1,1,1,0.5f);
+            GameObject heartObject = GameObject.Find("Heart");
+            if (heartObject != null)
+            {
+                SpriteRenderer spriteRenderer = heartObject.GetComponent<SpriteRenderer>();
+                if (spriteRenderer != null)
+                {
+                    Destroy(spriteRenderer.gameObject);
+                }
+            }
         }
-        if (tea && Input.GetKeyDown(KeyCode.R))
+        if(PlayerHp == 1)
         {
-            print("찻잔 사용");
-            tea = false;
+            GameObject heartObject = GameObject.Find("Heart1");
+            if (heartObject != null)
+            {
+                SpriteRenderer spriteRenderer = heartObject.GetComponent<SpriteRenderer>();
+                if (spriteRenderer != null)
+                {
+                    Destroy(spriteRenderer.gameObject);
+                }
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (PlayerHp <= 0)
         {
-            print("카드사용");
+            GameObject heartObject = GameObject.Find("Heart2");
+            if (heartObject != null)
+            {
+                SpriteRenderer spriteRenderer = heartObject.GetComponent<SpriteRenderer>();
+                if (spriteRenderer != null)
+                {
+                    Destroy(spriteRenderer.gameObject);
+                }
+            }
+            term -= Time.deltaTime;
+            if (term <= 0f) Die();
         }
+    }
+
+    private void Die()
+    {
+        SceneManager.LoadScene("Die");
     }
 }
