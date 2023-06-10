@@ -10,10 +10,12 @@ public class Player : MonoBehaviour
     bool defense = false;
     bool tea = false;
     Collider2D coll;
+    SpriteRenderer spriter;
 
     private void Awake()
     {
         coll = GetComponent<Collider2D>();
+        spriter = GetComponent<SpriteRenderer>();
     }
 
     public float speed;
@@ -111,12 +113,14 @@ public class Player : MonoBehaviour
         else
         {
             coll.enabled = true;
+            spriter.color = new Color(1, 1, 1, 1);
         }
         if (eatTime&&Input.GetKeyDown(KeyCode.E))
         {
             print("시계 사용");
             timeImpactTimer = 2;
             eatTime = false;
+            spriter.color = new Color(1,1,1,0.5f);
         }
         if (tea && Input.GetKeyDown(KeyCode.R))
         {
