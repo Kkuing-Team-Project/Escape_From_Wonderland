@@ -19,4 +19,12 @@ public class Rabbit : MonoBehaviour
         rigid.velocity = new Vector2(-3, rigid.velocity.y);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Rabbit과 Player가 충돌한 경우 처리할 내용을 작성합니다.
+            Debug.Log("Rabbit과 Player가 충돌했습니다!");
+        }
+    }
 }
