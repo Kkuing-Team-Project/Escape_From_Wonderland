@@ -130,12 +130,6 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.CompareTag("Rabbit"))
-        {
-            // Player와 Rabbit이 충돌한 경우 처리할 내용을 작성합니다.
-            Debug.Log("Player와 Rabbit이 충돌했습니다!");
-        }
-
         // 아이템 충돌 tage
         if (collision.gameObject.CompareTag("Time"))
         {
