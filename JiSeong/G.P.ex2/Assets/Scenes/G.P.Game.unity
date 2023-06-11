@@ -1023,6 +1023,7 @@ MonoBehaviour:
   - -0.7320001
   - -1.61
   - -2.548
+  playerTransform: {fileID: 1591804472}
 --- !u!4 &786426299
 Transform:
   m_ObjectHideFlags: 0

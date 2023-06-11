@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-   
-    
-
     private void OnTriggerEnter2D(Collider2D collision)
     {   
         if (collision.CompareTag("Rabbit"))
@@ -14,12 +11,6 @@ public class Card : MonoBehaviour
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
