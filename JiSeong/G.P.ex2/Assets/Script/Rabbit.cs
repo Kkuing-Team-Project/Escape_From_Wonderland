@@ -16,6 +16,6 @@ public class Rabbit : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rd.velocity = new Vector2(-3, rigid.velocity.y);
+        rb.velocity = new Vector2(-3, rigid.velocity.y);
     }
 }
