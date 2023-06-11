@@ -1,24 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-    public Transform playerTransform; // 플레이어의 Transform 컴포넌트
-
-    private RectTransform uiRectTransform; // UI 오브젝트의 RectTransform 컴포넌트
-
-    private void Start()
-    {
-        uiRectTransform = GetComponent<RectTransform>();
-    }
+    public Transform playerTransform;
+    public RectTransform speechBubbleRectTransform;
+    public float speechBubbleStartX;
+    public float speechBubbleEndX;
+    public float playerStartX;
+    public float playerEndX;
+    public float playerMoveSpeed;
 
     private void Update()
     {
-        // 플레이어의 월드 좌표를 UI 캔버스 좌표로 변환
-        Vector3 playerScreenPos = Camera.main.WorldToScreenPoint(playerTransform.position);
+        float normalizedPlayerX = Mathf.InverseLerp(playerStartX, playerEndX, playerTransform.position.x);
+        float targetSpeechBubbleX = Mathf.Lerp(speechBubbleStartX, speechBubbleEndX, normalizedPlayerX);
 
-        // UI 오브젝트의 위치를 플레이어의 위치로 설정
-        uiRectTransform.position = playerScreenPos;
+        float currentSpeechBubbleX = speechBubbleRectTransform.anchoredPosition.x;
+        float newSpeechBubbleX = Mathf.MoveTowards(currentSpeechBubbleX, targetSpeechBubbleX, playerMoveSpeed * Time.deltaTime);
+
+        Vector2 newSpeechBubblePosition = new Vector2(newSpeechBubbleX, speechBubbleRectTransform.anchoredPosition.y);
+        speechBubbleRectTransform.anchoredPosition = newSpeechBubblePosition;
     }
 }

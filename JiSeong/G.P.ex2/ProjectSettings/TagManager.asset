@@ -9,6 +9,9 @@ TagManager:
   - Hat
   - TeaCup
   - Image
+  - Card
+  - Map
+  - finish
   layers:
   - Default
   - TransparentFX

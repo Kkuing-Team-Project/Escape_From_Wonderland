@@ -6,13 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public static Player instance; // 인스턴스
-    public GameObject[] PalyerUIHp;
-    // public Image damageImage; // 피 효과
-    public Color flashColour = new Color(1f, 0f, 0f, 0.2f); // 충격 데미지 색깔
+    public static Player instance;
+    public GameObject[] PlayerUIHp;
+    public Color flashColour = new Color(1f, 0f, 0f, 0.2f);
 
     public float speed;
-    public int walkcount;
+    public int walkCount;
     public int PlayerHp = 3;
     public int RabbitHp;
     public int RabbitDmg = 1;
@@ -22,7 +21,6 @@ public class Player : MonoBehaviour
     private Vector3 vector;
     private Animator animator;
     private int currentWalkCount;
-    private float term = 0f;
     private bool canMove = true;
 
     float timeImpactTimer = 0;
@@ -35,9 +33,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer spriter;
     private Rigidbody2D rb;
 
-    public Transform speechBubble; // Speech Bubble UI 오브젝트의 Transform 컴포넌트
-    private float mapScaleX; // 맵의 가로 크기
-    private RectTransform speechBubbleRectTransform; // Speech Bubble UI 오브젝트의 RectTransform 컴포넌트
+    private float term = 0f;
 
     private void Awake()
     {
@@ -51,20 +47,12 @@ public class Player : MonoBehaviour
         coll = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
 
-        speechBubbleRectTransform = speechBubble.GetComponent<RectTransform>();
-        mapScaleX = GameObject.Find("Map").transform.localScale.x;
-
         Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
         damageImage.color = new Color(0f, 0f, 0f, 0f);
     }
 
     private void Update()
     {
-        float playerPosX = transform.position.x;
-        float speechBubblePosX = Mathf.Clamp(playerPosX, -mapScaleX / 2f, mapScaleX / 2f);
-        Vector3 speechBubblePos = new Vector3(speechBubblePosX, speechBubble.position.y, speechBubble.position.z);
-        speechBubble.position = speechBubblePos;
-
         if (canMove)
         {
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
@@ -83,7 +71,6 @@ public class Player : MonoBehaviour
         {
             timeImpactTimer -= Time.deltaTime;
             coll.enabled = false;
-
         }
         else
         {
@@ -106,14 +93,16 @@ public class Player : MonoBehaviour
         {
             print("카드사용");
         }
+
     }
+
 
     IEnumerator MoveCoroutine()
     {
-        while (Input.GetAxisRaw("Horizontal") !=0 || Input.GetAxisRaw("Vertical") !=0)
+        while (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
             vector.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
-            if(vector.x != 0)
+            if (vector.x != 0)
             {
                 vector.y = 0;
             }
@@ -177,6 +166,12 @@ public class Player : MonoBehaviour
                 TakeDamage(RabbitDmg);
                 ActivateDamageImage();
             }
+        }
+
+        // 도착지점 충돌 처리
+        if (collision.gameObject.CompareTag("finish"))
+        {
+            Finish();
         }
 
     }
@@ -245,5 +240,10 @@ public class Player : MonoBehaviour
     private void Die()
     {
         SceneManager.LoadScene("Die");
+    }
+
+    private void Finish()
+    {
+        SceneManager.LoadScene("Finish");
     }
 }
