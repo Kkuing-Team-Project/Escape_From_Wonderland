@@ -35,6 +35,10 @@ public class Player : MonoBehaviour
     private SpriteRenderer spriter;
     private Rigidbody2D rb;
 
+    public Transform speechBubble; // Speech Bubble UI 오브젝트의 Transform 컴포넌트
+    private float mapScaleX; // 맵의 가로 크기
+    private RectTransform speechBubbleRectTransform; // Speech Bubble UI 오브젝트의 RectTransform 컴포넌트
+
     private void Awake()
     {
         instance = this;
@@ -47,12 +51,20 @@ public class Player : MonoBehaviour
         coll = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
 
+        speechBubbleRectTransform = speechBubble.GetComponent<RectTransform>();
+        mapScaleX = GameObject.Find("Map").transform.localScale.x;
+
         Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
         damageImage.color = new Color(0f, 0f, 0f, 0f);
     }
 
     private void Update()
     {
+        float playerPosX = transform.position.x;
+        float speechBubblePosX = Mathf.Clamp(playerPosX, -mapScaleX / 2f, mapScaleX / 2f);
+        Vector3 speechBubblePos = new Vector3(speechBubblePosX, speechBubble.position.y, speechBubble.position.z);
+        speechBubble.position = speechBubblePos;
+
         if (canMove)
         {
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)

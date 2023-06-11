@@ -1982,6 +1982,7 @@ MonoBehaviour:
   RabbitHp: 0
   RabbitDmg: 1
   attack: {fileID: 1034494140029882523, guid: acd6283540689434290f6ddc445705fe, type: 3}
+  speechBubble: {fileID: 0}
 --- !u!61 &1591804476
 BoxCollider2D:
   m_ObjectHideFlags: 0
