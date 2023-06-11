@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     public int RabbitHp;
     public int RabbitDmg = 1;
 
+    public Card attack;
+
     private Vector3 vector;
     private Animator animator;
     private int currentWalkCount;
@@ -62,6 +64,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("run attack"))
         {
             animator.SetTrigger("run attack");
+            Instantiate(attack, transform.position, Quaternion.identity);
         }
 
         if (timeImpactTimer > 0)
