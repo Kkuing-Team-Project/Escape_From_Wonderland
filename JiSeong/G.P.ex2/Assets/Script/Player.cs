@@ -149,7 +149,12 @@ public class Player : MonoBehaviour
         
         if (collision.gameObject.CompareTag("Rabbit"))
         {
-            if (defense == true) defense = false;
+            if (defense == true)
+            {
+                
+                Destroy(collision.gameObject);
+                defense = false;
+            }
 
             else
             {
