@@ -10,7 +10,7 @@ public class Rabbit : MonoBehaviour
 
     void Awake()
     {
-        rigid = GetComponent<Rigidbody2D>();
+        rd = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
