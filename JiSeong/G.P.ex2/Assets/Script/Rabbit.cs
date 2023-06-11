@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Rabbit : MonoBehaviour
 {
-    Rigidbody2D rigid;
+    Rigidbody2D rd;
     public int nextMove;
 
     void Awake()
