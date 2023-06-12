@@ -210,14 +210,8 @@ public class Player : MonoBehaviour
                 {
                     Destroy(collision.gameObject);
 
-                    hatCount -= 1;
-
-                    if (hatCount <= 0)
-                    {
-                        Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
-                        hatImage.color = transparentColor;
-                        defense = false;
-                    }
+                    defense = false;
+                    hatCount = 0;
                 }
                 else
                 {
@@ -225,6 +219,11 @@ public class Player : MonoBehaviour
                     TakeDamage(RabbitDmg);
                     ActivateDamageImage();
                 }
+            }
+            if (defense == false)
+            {
+                Color transparentColor = new Color(1f, 1f, 1f, 0.4f); // 모자 사용하면 ui투명
+                hatImage.color = transparentColor;
             }
         }
         // 도착지점 충돌 처리
