@@ -28,15 +28,17 @@ public class Player : MonoBehaviour
     private int currentWalkCount;
     private bool canMove = true;
 
-    float timeImpactTimer = 0;
+    float timeImpactTimer = 0f;
 
     bool eatTime = false;
     bool defense = false;
     bool tea = false;
     bool hat = false;
 
+    bool tt = false;
+
     private Collider2D coll;
-    private SpriteRenderer spriter;
+    public SpriteRenderer spriter;
     private Rigidbody2D rb;
 
     private float term = 0f;
@@ -93,18 +95,6 @@ public class Player : MonoBehaviour
             CardCountNull += 1;
         }
 
-        if (timeImpactTimer > 0)
-        {
-            timeImpactTimer -= Time.deltaTime;
-            coll.enabled = false;
-        }
-
-        else
-        {
-            coll.enabled = true;
-            spriter.color = new Color(1, 1, 1, 1);
-        }
-
         Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
 
         if (eatTime && Input.GetKeyDown(KeyCode.E))
@@ -120,6 +110,21 @@ public class Player : MonoBehaviour
             }
         }
 
+        if (timeImpactTimer > 0)
+        {
+            timeImpactTimer -= Time.deltaTime;
+            tt = true;
+            SpriteRenderer playerimage = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+            playerimage.color = new Color(1f, 1f, 1f, 0.5f);
+        }
+
+        else
+        {
+            tt = false;
+            SpriteRenderer playerimage = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+            playerimage.color = new Color(1f, 1f, 1f, 1f);
+        }
+
         if (tea && Input.GetKeyDown(KeyCode.R))
         {
             print("찻잔 사용");
@@ -131,18 +136,6 @@ public class Player : MonoBehaviour
                 tea = false;
             }
         }
-
-       /* if (defense && Input.GetKeyDown(KeyCode.W))
-        {
-            print("모자 사용");
-            hatCount -= 1;
-
-            if (hatCount <= 0)
-            {
-                hatImage.color = transparentColor;
-                defense = false;
-            }
-        }*/
     }
 
     IEnumerator MoveCoroutine()
@@ -208,31 +201,32 @@ public class Player : MonoBehaviour
             teaCupImage.color = new Color(1f, 1f, 1f, 1f); // 찻잔 이미지를 원래대로 바꿔줌
         }
 
-        // 적들과 충돌 처리
-        if (collision.gameObject.CompareTag("Rabbit"))
+        if (tt == false)
         {
-            if (defense == true)
+            // 적들과 충돌 처리
+            if (collision.gameObject.CompareTag("Rabbit"))
             {
-                Destroy(collision.gameObject);
-
-                hatCount -= 1;
-
-                if (hatCount <= 0)
+                if (defense == true)
                 {
-                    Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
-                    hatImage.color = transparentColor;
-                    defense = false;
+                    Destroy(collision.gameObject);
+
+                    hatCount -= 1;
+
+                    if (hatCount <= 0)
+                    {
+                        Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
+                        hatImage.color = transparentColor;
+                        defense = false;
+                    }
+                }
+                else
+                {
+                    Destroy(collision.gameObject);
+                    TakeDamage(RabbitDmg);
+                    ActivateDamageImage();
                 }
             }
-
-            else
-            {
-                Destroy(collision.gameObject);
-                TakeDamage(RabbitDmg);
-                ActivateDamageImage();
-            }
         }
-
         // 도착지점 충돌 처리
         if (collision.gameObject.CompareTag("finish"))
         {
