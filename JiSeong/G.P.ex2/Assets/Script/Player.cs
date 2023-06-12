@@ -328,7 +328,11 @@ public class Player : MonoBehaviour
     }
 
     private void Die()
-    {   // game_data.csv 파일 경로
+    {
+        // Calculate the distance
+        float distance = transform.position.x; // Get the x position of the player
+
+        // game_data.csv 파일 경로
         int num = CheckData.instance.notlogin;
         if (num != 1)
         {
@@ -336,7 +340,8 @@ public class Player : MonoBehaviour
             string FilePath = Path.Combine(Application.dataPath, "UserData/");
 
             string userFilePath = Path.Combine(FilePath, id + ".csv");
-            string gameData = string.Format("Kills: {0}, Card Eat: {1}, Hat Eat: {2}, Time Eat: {3}, TeaCup Eat: {4}", KillCountNull, CardCountNull, hatCountNull, timeCountNull, teaCupCountNull);
+            string gameData = string.Format("Kills: {0}, Card Eat: {1}, Hat Eat: {2}, Time Eat: {3}, TeaCup Eat: {4}, Distance: {5}", KillCountNull, CardCountNull, hatCountNull, timeCountNull, teaCupCountNull, distance);
+  
             File.AppendAllText(userFilePath, gameData + "\n");
             Debug.Log("저장");
         }
@@ -347,6 +352,7 @@ public class Player : MonoBehaviour
 
         SceneManager.LoadScene("Die");
     }
+
 
     private void Finish()
     {
