@@ -21,15 +21,24 @@ public class RabbitSpawner : MonoBehaviour
     {
         while (true)
         {
+            if(Player.instance != null)
+            {
+                int num = Player.instance.PlayGame;
+                if (num != 0)
+                {
+                    
+
+                    // 토끼를 생성하고 위치를 설정합니다.
+                    float spawnPositionX = playerTransform.position.x + 10f;
+                    SpawnRabbit(spawnPositionX);
+
+                    // Time, Hat, TeaCup을 랜덤하게 생성합니다.
+                    SpawnRandomCollectible(spawnPositionX);
+                }
+            }
             yield return new WaitForSeconds(2f); // 2초간 대기
-
-            // 토끼를 생성하고 위치를 설정합니다.
-            float spawnPositionX = playerTransform.position.x + 10f;
-            SpawnRabbit(spawnPositionX);
-
-            // Time, Hat, TeaCup을 랜덤하게 생성합니다.
-            SpawnRandomCollectible(spawnPositionX);
         }
+            
     }
 
     void SpawnRandomCollectible(float xPosition)

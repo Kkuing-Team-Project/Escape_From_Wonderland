@@ -15,19 +15,23 @@ public class PlayerUI : MonoBehaviour
 
     private void Update()
     {
-        // 플레이어의 X 좌표를 정규화하여 speechBubble의 이동 대상 X 좌표를 계산
-        float normalizedPlayerX = Mathf.InverseLerp(playerStartX, playerEndX, playerTransform.position.x);
+         int num = Player.instance.PlayGame;
+         if (num != 0)
+         {
+             // 플레이어의 X 좌표를 정규화하여 speechBubble의 이동 대상 X 좌표를 계산
+             float normalizedPlayerX = Mathf.InverseLerp(playerStartX, playerEndX, playerTransform.position.x);
 
-        // speechBubble의 X 좌표를 플레이어의 X 좌표에 맞게 보간하여 목표 X 좌표를 계산
-        float targetSpeechBubbleX = Mathf.Lerp(speechBubbleStartX, speechBubbleEndX, normalizedPlayerX);
+             // speechBubble의 X 좌표를 플레이어의 X 좌표에 맞게 보간하여 목표 X 좌표를 계산
+             float targetSpeechBubbleX = Mathf.Lerp(speechBubbleStartX, speechBubbleEndX, normalizedPlayerX);
 
-        // 현재 speechBubble의 X 좌표와 목표 X 좌표 사이를 플레이어의 이동 속도로 보간하여 새로운 X 좌표를 계산
-        float currentSpeechBubbleX = speechBubbleRectTransform.anchoredPosition.x;
-        float newSpeechBubbleX = Mathf.MoveTowards(currentSpeechBubbleX, targetSpeechBubbleX, playerMoveSpeed * Time.deltaTime);
+             // 현재 speechBubble의 X 좌표와 목표 X 좌표 사이를 플레이어의 이동 속도로 보간하여 새로운 X 좌표를 계산
+             float currentSpeechBubbleX = speechBubbleRectTransform.anchoredPosition.x;
+             float newSpeechBubbleX = Mathf.MoveTowards(currentSpeechBubbleX, targetSpeechBubbleX, playerMoveSpeed * Time.deltaTime);
 
-        // speechBubble의 위치를 새로운 X 좌표로 업데이트
-        Vector2 newSpeechBubblePosition = new Vector2(newSpeechBubbleX, speechBubbleRectTransform.anchoredPosition.y);
-        speechBubbleRectTransform.anchoredPosition = newSpeechBubblePosition;
+             // speechBubble의 위치를 새로운 X 좌표로 업데이트
+             Vector2 newSpeechBubblePosition = new Vector2(newSpeechBubbleX, speechBubbleRectTransform.anchoredPosition.y);
+             speechBubbleRectTransform.anchoredPosition = newSpeechBubblePosition;
+         }
     }
 }
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1060121148014993304}
   - component: {fileID: 1060121148014993299}
   - component: {fileID: 1060121148014993301}
+  - component: {fileID: 3699860976291139431}
   - component: {fileID: 1060121148014993300}
   - component: {fileID: 2081591959135125782}
   - component: {fileID: 1908673242}
@@ -36,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1060121148014993305
 SpriteRenderer:
@@ -143,6 +144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerUIHp: []
+  teaCupImage: {fileID: 0}
+  hatImage: {fileID: 0}
+  timeImage: {fileID: 0}
   flashColour: {r: 1, g: 0, b: 0, a: 0.2}
   speed: 0.1
   walkCount: 0
@@ -150,6 +154,25 @@ MonoBehaviour:
   RabbitHp: 0
   RabbitDmg: 1
   attack: {fileID: 1034494140029882523, guid: acd6283540689434290f6ddc445705fe, type: 3}
+  spriter: {fileID: 0}
+  CardCountNull: 0
+  teaCupCountNull: 0
+  hatCountNull: 0
+  timeCountNull: 0
+  KillCountNull: 0
+--- !u!114 &3699860976291139431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060121148014993307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8382432eb69a3594ea3916c61702b856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.1
 --- !u!95 &1060121148014993300
 Animator:
   serializedVersion: 4

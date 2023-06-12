@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     public Color flashColour = new Color(1f, 0f, 0f, 1f);
 
     public float speed;
-    public int walkCount;
     public int PlayerHp = 3;
     public int RabbitHp;
     public int RabbitDmg = 1;
@@ -25,7 +24,7 @@ public class Player : MonoBehaviour
 
     private Vector3 vector;
     private Animator animator;
-    private int currentWalkCount;
+    // private int currentWalkCount;
     private bool canMove = true;
 
     float timeImpactTimer = 0f;
@@ -34,7 +33,6 @@ public class Player : MonoBehaviour
     bool eatTime = false;
     bool defense = false;
     bool tea = false;
-    bool hat = false;
 
     bool tt = false;
 
@@ -53,17 +51,21 @@ public class Player : MonoBehaviour
     public int timeCountNull = 0;
     public int KillCountNull = 0;
 
-    private void Awake()
-    {
-        instance = this;
-    }
+    //public Animation Opening;
+    public float PlayerSpeed = 3f;
+    public int PlayGame = 0;
+
 
     private void Start()
     {
+        instance = this;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
+
+        //Opening = GetComponent<Animator>();
+        transform.position = new Vector3(-48.69f, 0f, 0f);
 
         /*Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
         damageImage.color = new Color(0f, 0f, 0f, 0f);*/
@@ -71,69 +73,80 @@ public class Player : MonoBehaviour
         Image damageImage = GameObject.Find("effect").GetComponent<Image>();
         damageImage.color = new Color(0f, 0f, 0f, 0f); 
 
-         // TeaCup, Hat, Time 이미지를 70% 불투명하게 설정
-         Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
+        // TeaCup, Hat, Time 이미지를 70% 불투명하게 설정
+        Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
 
         teaCupImage.color = transparentColor;
         hatImage.color = transparentColor;
-        timeImage.color = transparentColor;
+        timeImage.color = transparentColor; 
     }
 
     private void Update()
     {
-        if (canMove)
+        if (PlayGame == 0) {
+            float moveSpeed = PlayerSpeed * Time.deltaTime;
+            transform.Translate(moveSpeed, 0, 0);
+            // animator.SetFloat("DirX", moveSpeed);
+            animator.SetBool("Walking", true);
+        }
+        
+
+        if(PlayGame != 0)
         {
-            if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+            if (canMove)
             {
-                canMove = false;
-                StartCoroutine(MoveCoroutine());
+                if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                {
+                    canMove = false;
+                    StartCoroutine(MoveCoroutine());
+                }
             }
-        }
-        if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("run attack"))
-        {
-            animator.SetTrigger("run attack");
-            Instantiate(attack, transform.position, Quaternion.identity);
-            CardCountNull += 1;
-        }
-
-        Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
-
-        if (eatTime && Input.GetKeyDown(KeyCode.E))
-        {
-            print("시계 사용");
-            timeImpactTimer = 2;
-            timeCount = 0;;
-
-            if (timeCount <= 0)
+            if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("run attack"))
             {
-                timeImage.color = transparentColor;
+                animator.SetTrigger("run attack");
+                Instantiate(attack, transform.position, Quaternion.identity);
+                CardCountNull += 1;
             }
-        }
 
-        if (timeImpactTimer > 0)
-        {
-            timeImpactTimer -= Time.deltaTime;
-            tt = true;
-            SpriteRenderer playerimage = GameObject.Find("Player").GetComponent<SpriteRenderer>();
-            playerimage.color = new Color(1f, 1f, 1f, 0.5f);
-        }
+            Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
 
-        else
-        {
-            tt = false;
-            SpriteRenderer playerimage = GameObject.Find("Player").GetComponent<SpriteRenderer>();
-            playerimage.color = new Color(1f, 1f, 1f, 1f);
-        }
-
-        if (tea && Input.GetKeyDown(KeyCode.R))
-        {
-            print("찻잔 사용");
-            teaCupCount = 0;
-
-            if (teaCupCount <= 0)
+            if (eatTime && Input.GetKeyDown(KeyCode.E))
             {
-                teaCupImage.color = transparentColor;
-                tea = false;
+                print("시계 사용");
+                timeImpactTimer = 2;
+                timeCount = 0; ;
+
+                if (timeCount <= 0)
+                {
+                    timeImage.color = transparentColor;
+                }
+            }
+
+            if (timeImpactTimer > 0)
+            {
+                timeImpactTimer -= Time.deltaTime;
+                tt = true;
+                SpriteRenderer playerimage = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+                playerimage.color = new Color(1f, 1f, 1f, 0.5f);
+            }
+
+            else
+            {
+                tt = false;
+                SpriteRenderer playerimage = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+                playerimage.color = new Color(1f, 1f, 1f, 1f);
+            }
+
+            if (tea && Input.GetKeyDown(KeyCode.R))
+            {
+                print("찻잔 사용");
+                teaCupCount = 0;
+
+                if (teaCupCount <= 0)
+                {
+                    teaCupImage.color = transparentColor;
+                    tea = false;
+                }
             }
         }
     }
@@ -162,7 +175,7 @@ public class Player : MonoBehaviour
 
             yield return new WaitForSeconds(0.01f);
 
-            currentWalkCount = 0;
+            // currentWalkCount = 0;
         }
         canMove = true;
         animator.SetBool("Walking", false);
@@ -170,7 +183,12 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.gameObject.CompareTag("Map"))
+        {
+            PlayGame = 1;
+            Destroy(collision.gameObject);
+        }
+
         // 아이템 충돌 태그
         if (collision.gameObject.CompareTag("Time"))
         {

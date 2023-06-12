@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Story.unity
     guid: 960d854a837bbb84abe5eb55faf17ce6
+  - enabled: 0
+    path: Assets/Scenes/PlayerGo.unity
+    guid: e55749fbeda69af46b13db0a8c64d507
   - enabled: 1
     path: Assets/Scenes/G.P.Game.unity
     guid: 2cda990e2423bbf4892e6590ba056729
