@@ -1,0 +1,53 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Controller : MonoBehaviour
+{
+    public Text ChatText;
+    public Text Name;
+    public string writerText = "";
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        StartCoroutine(TextPractice());
+    }
+
+    IEnumerator NormalChat(string narrator, string narration)
+    {
+        int a = 0;
+        Name.text = narrator;
+        writerText = "";
+
+        for (a = 0; a < narration.Length; a++)
+        {
+            writerText += narration[a];
+            ChatText.text = writerText;
+            yield return null;
+        }
+
+        while (true)
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                break;
+            }
+            yield return null;
+        }
+    }
+
+
+    IEnumerator TextPractice()
+    {
+        yield return StartCoroutine(NormalChat("플레이어","나는 플레이어다"));
+        yield return StartCoroutine(NormalChat("앨리스","나는 앨리스다"));
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
