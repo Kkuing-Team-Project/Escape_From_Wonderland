@@ -16,8 +16,7 @@ public class SaveData : MonoBehaviour
         string pwd = pwdInputField.text;
 
         // CSV 파일에서 ID가 이미 존재하는지 확인
-        string UserPath = @"D:\Git\Escape_From_Wonderland\JiSeong\G.P.ex2\";
-        string filePath = Path.Combine(UserPath, @"Assets\UserData\game_data.csv");
+        string filePath = Path.Combine(Application.dataPath, "UserData/game_data.csv");
 
         if (!File.Exists(filePath))
         {

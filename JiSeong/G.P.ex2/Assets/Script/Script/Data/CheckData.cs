@@ -24,14 +24,11 @@ public class CheckData : MonoBehaviour
         string id = idInputField.text;
         string pwd = pwdInputField.text;
 
-        // 유니티 게임 파일 경로
-        string UserPath = @"D:\Git\Escape_From_Wonderland\JiSeong\G.P.ex2\";
-
         // UserData 파일 경로
-        string FilePath = Path.Combine(UserPath, @"Assets\UserData\");
+        string FilePath = Path.Combine(Application.dataPath, "UserData/");
 
         // game_data.csv 파일 경로
-        string gameDataFilePath = Path.Combine(FilePath, @"game_data.csv");
+        string gameDataFilePath = Path.Combine(Application.dataPath, "UserData/game_data.csv");
         instance = this;
 
         // 입력된 ID와 PWD가 game_data.csv 파일의 ID/PWD와 일치하는지 확인

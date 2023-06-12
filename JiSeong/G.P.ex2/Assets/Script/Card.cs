@@ -8,6 +8,7 @@ public class Card : MonoBehaviour
     {   
         if (collision.CompareTag("Rabbit"))
         {
+            Player.instance.KillCountNull++;
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }

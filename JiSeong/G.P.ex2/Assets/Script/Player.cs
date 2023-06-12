@@ -1,3 +1,4 @@
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,12 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public static Player instance;
+
     public GameObject[] PlayerUIHp;
     public Image teaCupImage;
     public Image hatImage;
     public Image timeImage;
-    public Color flashColour = new Color(1f, 0f, 0f, 0.2f);
+    public Color flashColour = new Color(1f, 0f, 0f, 1f);
 
     public float speed;
     public int walkCount;
@@ -42,6 +44,12 @@ public class Player : MonoBehaviour
     private int hatCount = 0;
     private int timeCount = 0;
 
+    public int CardCountNull = 0;
+    public int teaCupCountNull = 0;
+    public int hatCountNull = 0;
+    public int timeCountNull = 0;
+    public int KillCountNull = 0;
+
     private void Awake()
     {
         instance = this;
@@ -54,11 +62,14 @@ public class Player : MonoBehaviour
         coll = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
 
-        Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
-        damageImage.color = new Color(0f, 0f, 0f, 0f);
+        /*Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
+        damageImage.color = new Color(0f, 0f, 0f, 0f);*/
 
-        // TeaCup, Hat, Time 이미지를 70% 불투명하게 설정
-        Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
+        Image damageImage = GameObject.Find("effect").GetComponent<Image>();
+        damageImage.color = new Color(0f, 0f, 0f, 0f); 
+
+         // TeaCup, Hat, Time 이미지를 70% 불투명하게 설정
+         Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
 
         teaCupImage.color = transparentColor;
         hatImage.color = transparentColor;
@@ -79,6 +90,7 @@ public class Player : MonoBehaviour
         {
             animator.SetTrigger("run attack");
             Instantiate(attack, transform.position, Quaternion.identity);
+            CardCountNull += 1;
         }
 
         if (timeImpactTimer > 0)
@@ -172,6 +184,7 @@ public class Player : MonoBehaviour
             print("시계먹음");
             eatTime = true;
             timeCount += 1;
+            timeCountNull += 1; // 누적 횟수
             timeImage.color = new Color(1f, 1f, 1f, 1f); // 시계 이미지를 원래대로 바꿔줌
         }
 
@@ -181,6 +194,7 @@ public class Player : MonoBehaviour
             print("모자먹음");
             defense = true;
             hatCount += 1;
+            hatCountNull += 1; // 누적 횟수
             hatImage.color = new Color(1f, 1f, 1f, 1f); // 모자 이미지를 원래대로 바꿔줌
         }
 
@@ -190,6 +204,7 @@ public class Player : MonoBehaviour
             print("찻잔먹음");
             tea = true;
             teaCupCount += 1;
+            teaCupCountNull += 1; // 누적 횟수
             teaCupImage.color = new Color(1f, 1f, 1f, 1f); // 찻잔 이미지를 원래대로 바꿔줌
         }
 
@@ -227,18 +242,18 @@ public class Player : MonoBehaviour
 
     private void ActivateDamageImage()
     {
-        Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
+        Image damageImage = GameObject.Find("effect").GetComponent<Image>();
 
         if (damageImage != null)
         {
-            damageImage.color = flashColour; // 데미지를 입으면 붉은색 화면
+            damageImage.color = new Color(1f, 0f, 0f, 1f);; // 데미지를 입으면 붉은색 화면
             StartCoroutine(DelayedDisableDamageImage());
         }
     }
 
     private IEnumerator DelayedDisableDamageImage() // 코루틴
     {
-        Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
+        Image damageImage = GameObject.Find("effect").GetComponent<Image>();
         yield return new WaitForSeconds(0.5f);
 
         damageImage.color = new Color(0f, 0f, 0f, 0f);
@@ -288,7 +303,23 @@ public class Player : MonoBehaviour
     }
 
     private void Die()
-    {
+    {   // game_data.csv 파일 경로
+        int num = CheckData.instance.notlogin;
+        if (num != 1)
+        {
+            string id = CheckData.instance.idInputField.text;
+            string FilePath = Path.Combine(Application.dataPath, "UserData/");
+
+            string userFilePath = Path.Combine(FilePath, id + ".csv");
+            string gameData = string.Format("Kills: {0}, Card Eat: {1}, Hat Eat: {2}, Time Eat: {3}, TeaCup Eat: {4}", KillCountNull, CardCountNull, hatCountNull, timeCountNull, teaCupCountNull);
+            File.AppendAllText(userFilePath, gameData + "\n");
+            Debug.Log("저장");
+        }
+        else
+        {
+            Debug.Log("저장할 데이터 없음");
+        }
+
         SceneManager.LoadScene("Die");
     }
 
