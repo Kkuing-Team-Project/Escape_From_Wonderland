@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
 {
     public static Player instance;
     public GameObject[] PlayerUIHp;
+    public Image teaCupImage;
+    public Image hatImage;
+    public Image timeImage;
     public Color flashColour = new Color(1f, 0f, 0f, 0.2f);
 
     public float speed;
@@ -28,12 +31,16 @@ public class Player : MonoBehaviour
     bool eatTime = false;
     bool defense = false;
     bool tea = false;
+    bool hat = false;
 
     private Collider2D coll;
     private SpriteRenderer spriter;
     private Rigidbody2D rb;
 
     private float term = 0f;
+    private int teaCupCount = 0;
+    private int hatCount = 0;
+    private int timeCount = 0;
 
     private void Awake()
     {
@@ -49,10 +56,19 @@ public class Player : MonoBehaviour
 
         Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
         damageImage.color = new Color(0f, 0f, 0f, 0f);
+
+        // TeaCup, Hat, Time 이미지를 70% 불투명하게 설정
+        Color transparentColor = new Color(1f, 1f, 1f, 0.7f);
+
+        teaCupImage.color = transparentColor;
+        hatImage.color = transparentColor;
+        timeImage.color = transparentColor;
     }
 
     private void Update()
     {
+        Color transparentColor = new Color(1f, 1f, 1f, 0.7f);
+
         if (canMove)
         {
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
@@ -72,30 +88,50 @@ public class Player : MonoBehaviour
             timeImpactTimer -= Time.deltaTime;
             coll.enabled = false;
         }
+
         else
         {
             coll.enabled = true;
             spriter.color = new Color(1, 1, 1, 1);
         }
+
         if (eatTime && Input.GetKeyDown(KeyCode.E))
         {
             print("시계 사용");
             timeImpactTimer = 2;
-            eatTime = false;
-            spriter.color = new Color(1, 1, 1, 0.5f);
+            timeCount -= 1;;
+
+            if (timeCount <= 0)
+            {
+                timeImage.color = transparentColor;
+                eatTime = false;
+            }
         }
+
         if (tea && Input.GetKeyDown(KeyCode.R))
         {
             print("찻잔 사용");
-            tea = false;
+            teaCupCount -= 1;
+
+            if (teaCupCount <= 0)
+            {
+                teaCupImage.color = transparentColor;
+                tea = false;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+
+       /* if (defense && Input.GetKeyDown(KeyCode.W))
         {
-            print("카드사용");
-        }
+            print("모자 사용");
+            hatCount -= 1;
 
+            if (hatCount <= 0)
+            {
+                hatImage.color = transparentColor;
+                defense = false;
+            }
+        }*/
     }
-
 
     IEnumerator MoveCoroutine()
     {
@@ -129,35 +165,49 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // 아이템 충돌 tage
+        // 아이템 충돌 태그
         if (collision.gameObject.CompareTag("Time"))
         {
             Destroy(collision.gameObject);
             print("시계먹음");
             eatTime = true;
+            timeCount += 1;
+            timeImage.color = new Color(1f, 1f, 1f, 1f); // 시계 이미지를 원래대로 바꿔줌
         }
+
         if (collision.gameObject.CompareTag("Hat"))
         {
             Destroy(collision.gameObject);
             print("모자먹음");
             defense = true;
+            hatCount += 1;
+            hatImage.color = new Color(1f, 1f, 1f, 1f); // 모자 이미지를 원래대로 바꿔줌
         }
+
         if (collision.gameObject.CompareTag("TeaCup"))
         {
             Destroy(collision.gameObject);
             print("찻잔먹음");
             tea = true;
+            teaCupCount += 1;
+            teaCupImage.color = new Color(1f, 1f, 1f, 1f); // 찻잔 이미지를 원래대로 바꿔줌
         }
 
         // 적들과 충돌 처리
-        
         if (collision.gameObject.CompareTag("Rabbit"))
         {
             if (defense == true)
             {
-                
                 Destroy(collision.gameObject);
-                defense = false;
+
+                hatCount -= 1;
+
+                if (hatCount <= 0)
+                {
+                    Color transparentColor = new Color(1f, 1f, 1f, 0.7f);
+                    hatImage.color = transparentColor;
+                    defense = false;
+                }
             }
 
             else
@@ -173,8 +223,8 @@ public class Player : MonoBehaviour
         {
             Finish();
         }
-
     }
+
     private void ActivateDamageImage()
     {
         Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
@@ -209,7 +259,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        if(PlayerHp == 1)
+        if (PlayerHp == 1)
         {
             GameObject heartObject = GameObject.Find("Heart1");
             if (heartObject != null)

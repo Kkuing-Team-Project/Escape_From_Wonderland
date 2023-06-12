@@ -18,7 +18,7 @@ public class Card : MonoBehaviour
     {
         Vector3 pos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1));
         Vector3 P = this.gameObject.transform.position;
-        transform.position += Vector3.right * Time.deltaTime * 6;
+        transform.position += Vector3.right * Time.deltaTime * 12;
         transform.Rotate(0, 0, 90);
         if (pos.x < P.x)
         {
