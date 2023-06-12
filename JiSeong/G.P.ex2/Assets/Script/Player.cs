@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
         {
             print("½Ã°è »ç¿ë");
             timeImpactTimer = 2;
-            timeCount -= 1;;
+            timeCount = 0;;
 
             if (timeCount <= 0)
             {
@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
         if (tea && Input.GetKeyDown(KeyCode.R))
         {
             print("ÂþÀÜ »ç¿ë");
-            teaCupCount -= 1;
+            teaCupCount = 0;
 
             if (teaCupCount <= 0)
             {
