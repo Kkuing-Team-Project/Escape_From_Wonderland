@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
         damageImage.color = new Color(0f, 0f, 0f, 0f);
 
         // TeaCup, Hat, Time 이미지를 70% 불투명하게 설정
-        Color transparentColor = new Color(1f, 1f, 1f, 0.7f);
+        Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
 
         teaCupImage.color = transparentColor;
         hatImage.color = transparentColor;
@@ -67,8 +67,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Color transparentColor = new Color(1f, 1f, 1f, 0.7f);
-
         if (canMove)
         {
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
@@ -94,6 +92,8 @@ public class Player : MonoBehaviour
             coll.enabled = true;
             spriter.color = new Color(1, 1, 1, 1);
         }
+
+        Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
 
         if (eatTime && Input.GetKeyDown(KeyCode.E))
         {
@@ -204,7 +204,7 @@ public class Player : MonoBehaviour
 
                 if (hatCount <= 0)
                 {
-                    Color transparentColor = new Color(1f, 1f, 1f, 0.7f);
+                    Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
                     hatImage.color = transparentColor;
                     defense = false;
                 }

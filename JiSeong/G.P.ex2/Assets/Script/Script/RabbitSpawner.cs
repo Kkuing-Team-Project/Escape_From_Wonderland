@@ -14,13 +14,6 @@ public class RabbitSpawner : MonoBehaviour
 
     private void Start()
     {
-        // 타일 개수와 Y값의 개수가 일치하는지 확인
-        if (tileYPositions.Count != 7)
-        {
-            Debug.LogError("타일 개수와 Y값 개수가 일치하지 않습니다!");
-            return;
-        }
-
         StartCoroutine(SpawnRabbitsRepeatedly());
     }
 
