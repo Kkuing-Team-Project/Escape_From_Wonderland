@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     private bool canMove = true;
 
     float timeImpactTimer = 0f;
+    float jonyatimer = 0f;
 
     bool eatTime = false;
     bool defense = false;
@@ -106,7 +107,6 @@ public class Player : MonoBehaviour
             if (timeCount <= 0)
             {
                 timeImage.color = transparentColor;
-                eatTime = false;
             }
         }
 
@@ -170,6 +170,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        
         // 아이템 충돌 태그
         if (collision.gameObject.CompareTag("Time"))
         {
@@ -206,20 +207,33 @@ public class Player : MonoBehaviour
             // 적들과 충돌 처리
             if (collision.gameObject.CompareTag("Rabbit"))
             {
-                if (defense == true)
+                if (jonyatimer > 0)
                 {
                     Destroy(collision.gameObject);
+                    jonyatimer -= Time.deltaTime;
 
-                    defense = false;
-                    hatCount = 0;
                 }
                 else
                 {
-                    Destroy(collision.gameObject);
-                    TakeDamage(RabbitDmg);
-                    ActivateDamageImage();
+                    if (defense == true)
+                    {
+                        Destroy(collision.gameObject);
+
+                        defense = false;
+                        hatCount = 0;
+                    }
+
+                    else
+                    {
+                        Destroy(collision.gameObject);
+                        TakeDamage(RabbitDmg);
+                        ActivateDamageImage();
+                    }
+                    jonyatimer += Time.deltaTime*3;
                 }
             }
+            
+
             if (defense == false)
             {
                 Color transparentColor = new Color(1f, 1f, 1f, 0.4f); // 모자 사용하면 ui투명
