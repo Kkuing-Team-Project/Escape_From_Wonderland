@@ -2250,6 +2250,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1060121148014993301, guid: f7ea4382f6e361440a896a21451bfade, type: 3}
+      propertyPath: TeaHp
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1060121148014993301, guid: f7ea4382f6e361440a896a21451bfade, type: 3}
       propertyPath: spriter
       value: 
       objectReference: {fileID: 1908673248}
@@ -4821,6 +4825,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2141296769 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7480637369792041465, guid: 75ec319ddd198a04b8483afc7d4c9414, type: 3}
+  m_PrefabInstance: {fileID: 7480637370355590097}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2141296773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141296769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c76ee1a5a4ffe4382df3328b8c795d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heart2: {fileID: 0}
+  heart1: {fileID: 0}
 --- !u!1001 &1214112403326976074
 PrefabInstance:
   m_ObjectHideFlags: 0

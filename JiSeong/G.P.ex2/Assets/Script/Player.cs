@@ -17,9 +17,10 @@ public class Player : MonoBehaviour
 
     public float speed;
     public int PlayerHp = 3;
-    public int TeaHp = 0;
+    private int maxHp = 3;
     public int RabbitHp;
     public int RabbitDmg = 1;
+    public SpriteRenderer[] heartSprites;
 
     public Card attack;
 
@@ -79,7 +80,8 @@ public class Player : MonoBehaviour
 
         teaCupImage.color = transparentColor;
         hatImage.color = transparentColor;
-        timeImage.color = transparentColor; 
+        timeImage.color = transparentColor;
+        UpdateHeartSprites();
     }
 
     private void Update()
@@ -141,8 +143,9 @@ public class Player : MonoBehaviour
             if (tea && Input.GetKeyDown(KeyCode.R))
             {
                 print("���� ���");
+                Heal(1);
                 teaCupCount = 0;
-                TakeDamage(TeaHp);
+                
                 if (teaCupCount <= 0)
                 {
                     teaCupImage.color = transparentColor;
@@ -321,45 +324,38 @@ public class Player : MonoBehaviour
     private void TakeDamage(int damageAmount)
     {
         PlayerHp -= damageAmount;
-        if (PlayerHp == 2)
-        {
-            GameObject heartObject = GameObject.Find("Heart");
-            if (heartObject != null)
-            {
-                SpriteRenderer spriteRenderer = heartObject.GetComponent<SpriteRenderer>();
-                if (spriteRenderer != null)
-                {
-                    Destroy(spriteRenderer.gameObject);
-                }
-            }
-        }
-        if (PlayerHp == 1)
-        {
-            GameObject heartObject = GameObject.Find("Heart1");
-            if (heartObject != null)
-            {
-                SpriteRenderer spriteRenderer = heartObject.GetComponent<SpriteRenderer>();
-                if (spriteRenderer != null)
-                {
-                    Destroy(spriteRenderer.gameObject);
-                }
-            }
-        }
         if (PlayerHp <= 0)
         {
-            GameObject heartObject = GameObject.Find("Heart2");
-            if (heartObject != null)
+            Die();
+        }
+        UpdateHeartSprites();
+    }
+    private void Heal(int healAmount)
+    {
+        PlayerHp += healAmount;
+
+        // 체력이 최대치를 넘지 않도록 제한
+        PlayerHp = Mathf.Min(PlayerHp, maxHp); 
+
+        UpdateHeartSprites(); // 체력 UI 이미지 업데이트
+    }
+    private void UpdateHeartSprites()
+    {
+        for (int i = 0; i < PlayerUIHp.Length; i++)
+        {
+            if (i < PlayerHp)
             {
-                SpriteRenderer spriteRenderer = heartObject.GetComponent<SpriteRenderer>();
-                if (spriteRenderer != null)
-                {
-                    Destroy(spriteRenderer.gameObject);
-                }
+                // 현재 체력 이상의 하트는 활성화
+                PlayerUIHp[i].SetActive(true);
             }
-            term -= Time.deltaTime;
-            if (term <= 0f) Die();
+            else
+            {
+                // 현재 체력 이하의 하트는 비활성화
+                PlayerUIHp[i].SetActive(false);
+            }
         }
     }
+
 
     private void Die()
     {
