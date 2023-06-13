@@ -55,7 +55,6 @@ public class Player : MonoBehaviour
     public float PlayerSpeed = 3f;
     public int PlayGame = 0;
 
-
     private void Start()
     {
         instance = this;
@@ -73,7 +72,7 @@ public class Player : MonoBehaviour
         Image damageImage = GameObject.Find("effect").GetComponent<Image>();
         damageImage.color = new Color(0f, 0f, 0f, 0f); 
 
-        // TeaCup, Hat, Time ÀÌ¹ÌÁö¸¦ 70% ºÒÅõ¸íÇÏ°Ô ¼³Á¤
+        // TeaCup, Hat, Time ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ 70% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
         Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
 
         teaCupImage.color = transparentColor;
@@ -112,7 +111,7 @@ public class Player : MonoBehaviour
 
             if (eatTime && Input.GetKeyDown(KeyCode.E))
             {
-                print("½Ã°è »ç¿ë");
+                print("ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½");
                 timeImpactTimer = 2;
                 timeCount = 0; ;
 
@@ -139,7 +138,7 @@ public class Player : MonoBehaviour
 
             if (tea && Input.GetKeyDown(KeyCode.R))
             {
-                print("ÂþÀÜ »ç¿ë");
+                print("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½");
                 teaCupCount = 0;
 
                 if (teaCupCount <= 0)
@@ -183,46 +182,68 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Map"))
+        if (collision.gameObject.CompareTag("start"))
         {
             PlayGame = 1;
             Destroy(collision.gameObject);
         }
 
-        // ¾ÆÀÌÅÛ Ãæµ¹ ÅÂ±×
+        if (collision.gameObject.CompareTag("Map")){
+            // Player ì˜¤ë¸Œì íŠ¸ì˜ í˜„ìž¬ ìœ„ì¹˜ë¥¼ ê°€ì ¸ì˜´
+            Vector3 currentPosition = transform.position;
+
+            // Player ì˜¤ë¸Œì íŠ¸ì˜ ìœ„ì¹˜ë¥¼ yì¶•ìœ¼ë¡œ -1ì¹¸ ë‚´ë¦¼
+            currentPosition.y -= 0.5f;
+
+            // ë³€ê²½ëœ ìœ„ì¹˜ë¥¼ ì ìš©í•˜ì—¬ Player ì˜¤ë¸Œì íŠ¸ë¥¼ ì´ë™ì‹œí‚´
+            transform.position = currentPosition;
+        }
+
+        if (collision.gameObject.CompareTag("Map2")){
+            // Player ì˜¤ë¸Œì íŠ¸ì˜ í˜„ìž¬ ìœ„ì¹˜ë¥¼ ê°€ì ¸ì˜´
+            Vector3 currentPosition = transform.position;
+
+            // Player ì˜¤ë¸Œì íŠ¸ì˜ ìœ„ì¹˜ë¥¼ yì¶•ìœ¼ë¡œ +1ì¹¸ ë‚´ë¦¼
+            currentPosition.y += 0.5f;
+
+            // ë³€ê²½ëœ ìœ„ì¹˜ë¥¼ ì ìš©í•˜ì—¬ Player ì˜¤ë¸Œì íŠ¸ë¥¼ ì´ë™ì‹œí‚´
+            transform.position = currentPosition;
+        }
+
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ ï¿½Â±ï¿½
         if (collision.gameObject.CompareTag("Time"))
         {
             Destroy(collision.gameObject);
-            print("½Ã°è¸ÔÀ½");
+            print("ï¿½Ã°ï¿½ï¿½ï¿½ï¿½");
             eatTime = true;
             timeCount += 1;
-            timeCountNull += 1; // ´©Àû È½¼ö
-            timeImage.color = new Color(1f, 1f, 1f, 1f); // ½Ã°è ÀÌ¹ÌÁö¸¦ ¿ø·¡´ë·Î ¹Ù²ãÁÜ
+            timeCountNull += 1; // ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½
+            timeImage.color = new Color(1f, 1f, 1f, 1f); // ï¿½Ã°ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½
         }
 
         if (collision.gameObject.CompareTag("Hat"))
         {
             Destroy(collision.gameObject);
-            print("¸ðÀÚ¸ÔÀ½");
+            print("ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½");
             defense = true;
             hatCount += 1;
-            hatCountNull += 1; // ´©Àû È½¼ö
-            hatImage.color = new Color(1f, 1f, 1f, 1f); // ¸ðÀÚ ÀÌ¹ÌÁö¸¦ ¿ø·¡´ë·Î ¹Ù²ãÁÜ
+            hatCountNull += 1; // ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½
+            hatImage.color = new Color(1f, 1f, 1f, 1f); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½
         }
 
         if (collision.gameObject.CompareTag("TeaCup"))
         {
             Destroy(collision.gameObject);
-            print("ÂþÀÜ¸ÔÀ½");
+            print("ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½ï¿½");
             tea = true;
             teaCupCount += 1;
-            teaCupCountNull += 1; // ´©Àû È½¼ö
-            teaCupImage.color = new Color(1f, 1f, 1f, 1f); // ÂþÀÜ ÀÌ¹ÌÁö¸¦ ¿ø·¡´ë·Î ¹Ù²ãÁÜ
+            teaCupCountNull += 1; // ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½
+            teaCupImage.color = new Color(1f, 1f, 1f, 1f); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½
         }
 
         if (tt == false)
         {
-            // Àûµé°ú Ãæµ¹ Ã³¸®
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ Ã³ï¿½ï¿½
             if (collision.gameObject.CompareTag("Rabbit"))
             {
                 if (jonyatimer > 0)
@@ -237,7 +258,7 @@ public class Player : MonoBehaviour
 
                         defense = false;
                         hatCount = 0;
-                        print("¸ðÀÚ»ç¿ë");
+                        print("ï¿½ï¿½ï¿½Ú»ï¿½ï¿½");
                     }
 
                     else
@@ -245,7 +266,7 @@ public class Player : MonoBehaviour
                         Destroy(collision.gameObject);
                         TakeDamage(RabbitDmg);
                         ActivateDamageImage();
-                        print("ÇÇÇØ");
+                        print("ï¿½ï¿½ï¿½ï¿½");
                     }
                     jonyatimer = 0.1f;
                 }
@@ -254,11 +275,11 @@ public class Player : MonoBehaviour
 
             if (defense == false)
             {
-                Color transparentColor = new Color(1f, 1f, 1f, 0.4f); // ¸ðÀÚ »ç¿ëÇÏ¸é uiÅõ¸í
+                Color transparentColor = new Color(1f, 1f, 1f, 0.4f); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ uiï¿½ï¿½ï¿½ï¿½
                 hatImage.color = transparentColor;
             }
         }
-        // µµÂøÁöÁ¡ Ãæµ¹ Ã³¸®
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ Ã³ï¿½ï¿½
         if (collision.gameObject.CompareTag("finish"))
         {
             Finish();
@@ -273,12 +294,12 @@ public class Player : MonoBehaviour
 
         if (damageImage != null)
         {
-            damageImage.color = new Color(1f, 0f, 0f, 1f);; // µ¥¹ÌÁö¸¦ ÀÔÀ¸¸é ºÓÀº»ö È­¸é
+            damageImage.color = new Color(1f, 0f, 0f, 1f);; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½
             StartCoroutine(DelayedDisableDamageImage());
         }
     }
 
-    private IEnumerator DelayedDisableDamageImage() // ÄÚ·çÆ¾
+    private IEnumerator DelayedDisableDamageImage() // ï¿½Ú·ï¿½Æ¾
     {
         Image damageImage = GameObject.Find("effect").GetComponent<Image>();
         yield return new WaitForSeconds(0.5f);
@@ -334,7 +355,7 @@ public class Player : MonoBehaviour
         // Calculate the distance
         float distance = transform.position.x; // Get the x position of the player
 
-        // game_data.csv ÆÄÀÏ °æ·Î
+        // game_data.csv ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         int num = CheckData.instance.notlogin;
         if (num != 1)
         {
@@ -342,14 +363,14 @@ public class Player : MonoBehaviour
             string FilePath = Path.Combine(Application.dataPath, "UserData/");
 
             string userFilePath = Path.Combine(FilePath, id + ".csv");
-            string gameData = string.Format("Kills: {0}, Card Eat: {1}, Hat Eat: {2}, Time Eat: {3}, TeaCup Eat: {4}, Distance: {5}", KillCountNull, CardCountNull, hatCountNull, timeCountNull, teaCupCountNull, distance);
-  
+            //string gameData = string.Format("Kills: {0}, Card Eat: {1}, Hat Eat: {2}, Time Eat: {3}, TeaCup Eat: {4}, Distance: {5}", KillCountNull, CardCountNull, hatCountNull, timeCountNull, teaCupCountNull, distance);
+            string gameData = string.Format("{0}, {1}, {2}, {3}, {4}", KillCountNull, CardCountNull, hatCountNull, timeCountNull, teaCupCountNull);
             File.AppendAllText(userFilePath, gameData + "\n");
-            Debug.Log("ÀúÀå");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½");
         }
         else
         {
-            Debug.Log("ÀúÀåÇÒ µ¥ÀÌÅÍ ¾øÀ½");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
 
         SceneManager.LoadScene("Die");
