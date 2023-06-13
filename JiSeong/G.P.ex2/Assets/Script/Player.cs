@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     public float speed;
     public int PlayerHp = 3;
+    public int TeaHp = 0;
     public int RabbitHp;
     public int RabbitDmg = 1;
 
@@ -141,13 +142,14 @@ public class Player : MonoBehaviour
             {
                 print("���� ���");
                 teaCupCount = 0;
-
+                TakeDamage(TeaHp);
                 if (teaCupCount <= 0)
                 {
                     teaCupImage.color = transparentColor;
                     tea = false;
                 }
             }
+            jonyatimer -= Time.deltaTime;
         }
     }
 
@@ -295,7 +297,6 @@ public class Player : MonoBehaviour
             SpriteRenderer playerimage = GameObject.Find("Player").GetComponent<SpriteRenderer>();
             playerimage.color = new Color(1f, 1f, 1f, 1f);
         }
-        jonyatimer -= Time.deltaTime;
     }
 
     private void ActivateDamageImage()
