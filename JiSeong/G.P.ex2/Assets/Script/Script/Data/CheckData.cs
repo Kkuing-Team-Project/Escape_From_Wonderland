@@ -10,8 +10,17 @@ public class CheckData : MonoBehaviour
 
     public TMP_InputField idInputField;
     public TMP_InputField pwdInputField;
+    public TextMeshProUGUI uiText;
+
+    public TextMeshProUGUI text1;
+    public TextMeshProUGUI text2;
+    public TextMeshProUGUI text3;
+    public TextMeshProUGUI text4;
+    public TextMeshProUGUI text5;
+    public TextMeshProUGUI text6;
 
     public int notlogin;
+    private int datacheck;
 
     public void NOTLOGINS()
     {
@@ -25,7 +34,7 @@ public class CheckData : MonoBehaviour
         string pwd = pwdInputField.text;
 
         // UserData 파일 경로
-        string FilePath = Path.Combine(Application.dataPath, "UserData/");
+        string filePath = Path.Combine(Application.dataPath, "UserData/");
 
         // game_data.csv 파일 경로
         string gameDataFilePath = Path.Combine(Application.dataPath, "UserData/game_data.csv");
@@ -41,19 +50,25 @@ public class CheckData : MonoBehaviour
             string loginTimeData = string.Format("Login Time: {0}", currentTime);
 
             // ID.CSV 파일 경로
-            string userFilePath = Path.Combine(FilePath, id + ".csv");
+            string userFilePath = Path.Combine(filePath, id + ".csv");
 
             // ID.CSV 파일에 로그인 시간 저장
             if (!File.Exists(userFilePath))
             {
-                File.WriteAllText(userFilePath, loginTimeData + "\n");
+                File.WriteAllText(userFilePath, "");
                 Debug.Log(userFilePath + " 만듬");
             }
             else
             {
-                File.AppendAllText(userFilePath, loginTimeData + "\n");
+                //File.AppendAllText(userFilePath, loginTimeData + "\n");
                 Debug.Log("데이터 추가");
             }
+
+            datacheck = 1;
+        }
+        else
+        {
+            datacheck = 0;
         }
     }
 
@@ -71,5 +86,79 @@ public class CheckData : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void LoadData()
+    {
+        if (datacheck == 1)
+        {
+            string filePath = Path.Combine(Application.dataPath, "UserData/" + idInputField.text + ".csv");
+
+            if (File.Exists(filePath))
+            {
+                string[] lines = File.ReadAllLines(filePath);
+                List<string[]> data = new List<string[]>();
+
+                foreach (string line in lines)
+                {
+                    string[] values = line.Split(',');
+                    data.Add(values);
+                }
+
+                if (data.Count >= 5 && data[0].Length >= 6) // Ensure at least 6 rows and 6 columns are available
+                {
+                    // Find the highest value in each column (0 to 5)
+                    string highestValue0 = FindHighestNumericValueInColumn(data, 0);
+                    string highestValue1 = FindHighestNumericValueInColumn(data, 1);
+                    string highestValue2 = FindHighestNumericValueInColumn(data, 2);
+                    string highestValue3 = FindHighestNumericValueInColumn(data, 3);
+                    string highestValue4 = FindHighestNumericValueInColumn(data, 4);
+                    string highestValue5 = FindHighestNumericValueInColumn(data, 5);
+
+                    // Assign the highest values to the respective text fields
+                    uiText.text = "User: " + idInputField.text;
+                    text1.text = highestValue0;
+                    text2.text = highestValue1;
+                    text3.text = highestValue2;
+                    text4.text = highestValue3;
+                    text5.text = highestValue4;
+                    text6.text = highestValue5;
+                }
+                else
+                {
+                    // Handle insufficient rows or columns by displaying a default or error message
+                    uiText.text = "User: " + idInputField.text;
+                    text1.text = "N/A";
+                    text2.text = "N/A";
+                    text3.text = "N/A";
+                    text4.text = "N/A";
+                    text5.text = "N/A";
+                    text6.text = "N/A";
+                }
+            }
+        }
+    }
+
+    private string FindHighestNumericValueInColumn(List<string[]> data, int columnIndex)
+    {
+        float highestValue = float.MinValue;
+        foreach (string[] row in data)
+        {
+            if (row.Length > columnIndex)
+            {
+                string value = row[columnIndex];
+                float floatValue;
+                if (float.TryParse(value, out floatValue))
+                {
+                    if (floatValue > highestValue)
+                    {
+                        highestValue = floatValue;
+                    }
+                    //Distance
+                }
+            }
+        }
+
+        return highestValue.ToString();
     }
 }
