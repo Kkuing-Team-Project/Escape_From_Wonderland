@@ -2258,6 +2258,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1908673248}
     - target: {fileID: 1060121148014993301, guid: f7ea4382f6e361440a896a21451bfade, type: 3}
+      propertyPath: PlayerHp
+      value: 99999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1060121148014993301, guid: f7ea4382f6e361440a896a21451bfade, type: 3}
       propertyPath: hatImage
       value: 
       objectReference: {fileID: 1965631392}
