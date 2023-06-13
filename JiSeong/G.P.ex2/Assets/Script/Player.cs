@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
                     canMove = false;
                     StartCoroutine(MoveCoroutine());
                 }
-            }
+            }   
             if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("run attack"))
             {
                 animator.SetTrigger("run attack");
@@ -263,7 +263,16 @@ public class Player : MonoBehaviour
         {
             Finish();
         }
-
+        if (jonyatimer > 0)
+        {
+            SpriteRenderer playerimage = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+            playerimage.color = new Color(1f, 1f, 1f, 0.5f);
+        }
+        else
+        {
+            SpriteRenderer playerimage = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+            playerimage.color = new Color(1f, 1f, 1f, 1f);
+        }
         jonyatimer -= Time.deltaTime;
     }
 

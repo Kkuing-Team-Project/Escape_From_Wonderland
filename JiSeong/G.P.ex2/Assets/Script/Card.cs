@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
+    public Effact effact;
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {   
         if (collision.CompareTag("Rabbit"))
