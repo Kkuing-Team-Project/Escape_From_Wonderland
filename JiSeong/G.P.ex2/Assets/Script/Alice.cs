@@ -20,50 +20,58 @@ public class Alice : MonoBehaviour
     private float targetY;
 
     // Start is called before the first frame update
-    IEnumerator Start()
+    void Start()
     {
         animator = GetComponent<Animator>();
-
-        while (true)
-        {
-            float moveDelay = Random.Range(minDelay, maxDelay);
-            yield return new WaitForSeconds(moveDelay);
-
-            targetX = player.position.x;
-            targetY = Random.Range(minYPosition, maxYPosition);
-
-            StartCoroutine(MoveToTarget(new Vector3(targetX, targetY, transform.position.z)));
-
-            float attackDelay = Random.Range(minAttackDelay, maxAttackDelay);
-            yield return new WaitForSeconds(attackDelay);
-
-            animator.SetInteger("AttackIndex", Random.Range(0, 2));
-            animator.SetTrigger("Attack");
-        }
+        StartCoroutine(MoveToTarget(new Vector3(targetX, targetY, transform.position.z)));
     }
 
     private void Update()
     {
         float distance = Mathf.Clamp(Random.Range(minDistance, maxDistance), minDistance, maxDistance);
 
-        if (Mathf.Abs(transform.position.x - player.position.x) > distance)
-        {
-            targetX = player.position.x;
-            targetY = Random.Range(minYPosition, maxYPosition);
-            transform.position = new Vector3(targetX, targetY, transform.position.z);
-        }
+        // if (Mathf.Abs(transform.position.x - player.position.x) > distance)
+        // {
+        //     targetX = player.position.x;
+        //     targetY = Random.Range(minYPosition, maxYPosition);
+        //     transform.position = new Vector3(targetX, targetY, transform.position.z);
+        // }
 
-        float step = movementSpeed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, targetY, transform.position.z), step);
+        // float step = movementSpeed * Time.deltaTime;
+        // transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetX, targetY, transform.position.z), step);
     }
-
     IEnumerator MoveToTarget(Vector3 target)
     {
-        while (transform.position != target)
+        float nextTime;
+        float t=0f;
+        
+        while(true){
+            t=0f;
+            nextTime=Random.Range(minAttackDelay,maxAttackDelay);
+            while (nextTime>t)
+            {
+                t+=Time.deltaTime;
+                transform.position=Vector2.Lerp(transform.position, player.position,Time.deltaTime);
+                yield return null;
+            }
+                    yield return StartCoroutine(Attack());
+        }
+
+    }
+    IEnumerator Attack()
+    {
+        float t=0f;
+        Debug.Log("testtstt");
+        while(t<0.5f)
         {
-            float step = movementSpeed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, target, step);
+            t+=Time.deltaTime*2f;
+            transform.position=Vector2.Lerp(transform.position,player.position,t);
             yield return null;
         }
+        animator.SetInteger("AttackIndex", 0);
+        animator.SetTrigger("Attack");
+        while(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name=="Alice")
+            yield return null;
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
     }
 }
