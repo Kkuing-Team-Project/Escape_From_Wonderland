@@ -17,6 +17,7 @@ public class CheckData : MonoBehaviour
     public TextMeshProUGUI text3;
     public TextMeshProUGUI text4;
     public TextMeshProUGUI text5;
+    public TextMeshProUGUI text6;
 
     public int notlogin;
     private int datacheck;
@@ -54,7 +55,7 @@ public class CheckData : MonoBehaviour
             // ID.CSV 파일에 로그인 시간 저장
             if (!File.Exists(userFilePath))
             {
-                File.WriteAllText(userFilePath, 0+"\n");
+                File.WriteAllText(userFilePath, "");
                 Debug.Log(userFilePath + " 만듬");
             }
             else
@@ -104,14 +105,15 @@ public class CheckData : MonoBehaviour
                     data.Add(values);
                 }
 
-                if (data.Count >= 5 && data[0].Length >= 5) // Ensure at least 5 rows and 5 columns are available
+                if (data.Count >= 5 && data[0].Length >= 6) // Ensure at least 6 rows and 6 columns are available
                 {
-                    // Find the highest value in each column (0 to 4)
+                    // Find the highest value in each column (0 to 5)
                     string highestValue0 = FindHighestNumericValueInColumn(data, 0);
                     string highestValue1 = FindHighestNumericValueInColumn(data, 1);
                     string highestValue2 = FindHighestNumericValueInColumn(data, 2);
                     string highestValue3 = FindHighestNumericValueInColumn(data, 3);
                     string highestValue4 = FindHighestNumericValueInColumn(data, 4);
+                    string highestValue5 = FindHighestNumericValueInColumn(data, 5);
 
                     // Assign the highest values to the respective text fields
                     uiText.text = "User: " + idInputField.text;
@@ -120,6 +122,7 @@ public class CheckData : MonoBehaviour
                     text3.text = highestValue2;
                     text4.text = highestValue3;
                     text5.text = highestValue4;
+                    text6.text = highestValue5;
                 }
                 else
                 {
@@ -130,7 +133,7 @@ public class CheckData : MonoBehaviour
                     text3.text = "N/A";
                     text4.text = "N/A";
                     text5.text = "N/A";
-                    Debug.LogError("Insufficient rows or columns in the data list.");
+                    text6.text = "N/A";
                 }
             }
         }
@@ -151,6 +154,7 @@ public class CheckData : MonoBehaviour
                     {
                         highestValue = floatValue;
                     }
+                    //Distance
                 }
             }
         }

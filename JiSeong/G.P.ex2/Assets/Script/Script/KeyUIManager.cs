@@ -12,7 +12,7 @@ public class KeyUIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Canvas[0].SetActive(true);
-            Canvas[1].SetActive(false);
+            Canvas[1].SetActive(true);
         }
     }
 }

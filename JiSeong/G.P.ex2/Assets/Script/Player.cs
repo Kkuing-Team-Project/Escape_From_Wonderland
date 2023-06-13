@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
     public int hatCountNull = 0;
     public int timeCountNull = 0;
     public int KillCountNull = 0;
+    public float distance = 0;
 
     //public Animation Opening;
     public float PlayerSpeed = 3f;
@@ -353,7 +354,7 @@ public class Player : MonoBehaviour
     private void Die()
     {
         // Calculate the distance
-        float distance = transform.position.x; // Get the x position of the player
+        distance = transform.position.x; // Get the x position of the player
 
         // game_data.csv ���� ���
         int num = CheckData.instance.notlogin;
@@ -364,7 +365,7 @@ public class Player : MonoBehaviour
 
             string userFilePath = Path.Combine(FilePath, id + ".csv");
             //string gameData = string.Format("Kills: {0}, Card Eat: {1}, Hat Eat: {2}, Time Eat: {3}, TeaCup Eat: {4}, Distance: {5}", KillCountNull, CardCountNull, hatCountNull, timeCountNull, teaCupCountNull, distance);
-            string gameData = string.Format("{0}, {1}, {2}, {3}, {4}", KillCountNull, CardCountNull, hatCountNull, timeCountNull, teaCupCountNull);
+            string gameData = string.Format("{0}, {1}, {2}, {3}, {4}, {5}", KillCountNull, CardCountNull, hatCountNull, timeCountNull, teaCupCountNull, distance);
             File.AppendAllText(userFilePath, gameData + "\n");
             Debug.Log("����");
         }
