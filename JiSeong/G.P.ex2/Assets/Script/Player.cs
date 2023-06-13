@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     public float speed;
     public int PlayerHp = 3;
+    public int TeaHp = 0;
     public int RabbitHp;
     public int RabbitDmg = 1;
 
@@ -100,7 +101,7 @@ public class Player : MonoBehaviour
                     canMove = false;
                     StartCoroutine(MoveCoroutine());
                 }
-            }
+            }   
             if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("run attack"))
             {
                 animator.SetTrigger("run attack");
@@ -141,13 +142,14 @@ public class Player : MonoBehaviour
             {
                 print("���� ���");
                 teaCupCount = 0;
-
+                TakeDamage(TeaHp);
                 if (teaCupCount <= 0)
                 {
                     teaCupImage.color = transparentColor;
                     tea = false;
                 }
             }
+            jonyatimer -= Time.deltaTime;
         }
     }
 
@@ -285,8 +287,16 @@ public class Player : MonoBehaviour
         {
             Finish();
         }
-
-        jonyatimer -= Time.deltaTime;
+        if (jonyatimer > 0)
+        {
+            SpriteRenderer playerimage = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+            playerimage.color = new Color(1f, 1f, 1f, 0.5f);
+        }
+        else
+        {
+            SpriteRenderer playerimage = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+            playerimage.color = new Color(1f, 1f, 1f, 1f);
+        }
     }
 
     private void ActivateDamageImage()
