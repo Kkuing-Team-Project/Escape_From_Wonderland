@@ -228,8 +228,6 @@ public class Player : MonoBehaviour
                 if (jonyatimer > 0)
                 {
                     Destroy(collision.gameObject);
-                    jonyatimer -= Time.deltaTime;
-
                 }
                 else
                 {
@@ -239,6 +237,7 @@ public class Player : MonoBehaviour
 
                         defense = false;
                         hatCount = 0;
+                        print("모자사용");
                     }
 
                     else
@@ -246,8 +245,9 @@ public class Player : MonoBehaviour
                         Destroy(collision.gameObject);
                         TakeDamage(RabbitDmg);
                         ActivateDamageImage();
+                        print("피해");
                     }
-                    jonyatimer += Time.deltaTime*3;
+                    jonyatimer = 0.1f;
                 }
             }
             
@@ -263,6 +263,8 @@ public class Player : MonoBehaviour
         {
             Finish();
         }
+
+        jonyatimer -= Time.deltaTime;
     }
 
     private void ActivateDamageImage()
