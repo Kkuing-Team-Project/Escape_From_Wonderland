@@ -529,8 +529,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -234.57, y: -228}
-  m_SizeDelta: {x: 745.699, y: 112.7077}
+  m_AnchoredPosition: {x: -7.828705, y: -228}
+  m_SizeDelta: {x: 1199.1816, y: 112.7077}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &639401952
 MonoBehaviour:
@@ -809,6 +809,8 @@ MonoBehaviour:
   writerText: 
   emptyImage: {fileID: 1865967321}
   changeSprite: {fileID: 21300000, guid: 3b27310e182df3b4a8b6ba976ade00f5, type: 3}
+  changeSprite2: {fileID: 21300000, guid: 931d4aae9bca72e4089596a04bd8e804, type: 3}
+  changeSprite3: {fileID: 21300000, guid: 0558232533667724d86d8c658fcdc20d, type: 3}
   uiButton: {fileID: 512935606}
 --- !u!1 &1388023319
 GameObject:

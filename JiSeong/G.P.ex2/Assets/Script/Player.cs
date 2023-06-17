@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     public int RabbitDmg = 1;
     public SpriteRenderer[] heartSprites;
 
+    private bool isJumping = false;
+    private float jumpForce = 5f;
     public Card attack;
 
     private Vector3 vector;
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
     float timeImpactTimer = 0f;
     public float cardTime = 5f;
     float jonyatimer = 0f;
+   
 
     bool eatTime = false;
     bool defense = false;
@@ -45,6 +48,7 @@ public class Player : MonoBehaviour
     private Collider2D coll;
     public SpriteRenderer spriter;
     private Rigidbody2D rb;
+
 
     private float term = 0f;
     private int teaCupCount = 0;
@@ -62,6 +66,7 @@ public class Player : MonoBehaviour
     //public Animation Opening;
     public float PlayerSpeed = 3f;
     public int PlayGame = 0;
+
 
     private void Start()
     {
@@ -137,7 +142,7 @@ public class Player : MonoBehaviour
                 }
             }
 
-            Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
+                Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
 
             if (eatTime && Input.GetKeyDown(KeyCode.E))
             {
@@ -179,6 +184,13 @@ public class Player : MonoBehaviour
                 }
             }
             jonyatimer -= Time.deltaTime;
+
+            if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
+            {
+                rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                isJumping = true;
+            }
+
         }
     }
 
@@ -246,6 +258,7 @@ public class Player : MonoBehaviour
 
             // 변경된 위치를 적용하여 Player 오브젝트를 이동시킴
             transform.position = currentPosition;
+
         }
 
         // ������ �浹 �±�
@@ -278,6 +291,9 @@ public class Player : MonoBehaviour
             teaCupCountNull += 1; // ���� Ƚ��
             teaCupImage.color = new Color(1f, 1f, 1f, 1f); // ���� �̹����� ������� �ٲ���
         }
+
+
+
 
         if (tt == false)
         {
