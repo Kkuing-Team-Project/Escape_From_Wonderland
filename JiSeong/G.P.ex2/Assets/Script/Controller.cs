@@ -78,8 +78,8 @@ public class Controller : MonoBehaviour
     {
         yield return StartCoroutine(NormalChat("앨리스", "어머, 뭘 그렇게 급하게 찾고 있는 거야?", 1));
         yield return StartCoroutine(NormalChat("주인공", "앨리스, 들어줘. 이 열쇠가 이상한 나라에서 탈출하기 위한 열쇠라고 하더라고.", 3));
-        yield return StartCoroutine(NormalChat("앨리스", "탈출? 꼭 탈출 해야겠어? 여긴 환상적인 세계라고! 여기서 즐거운 시간을 보내면 되는거 아니야?", 1));
-        yield return StartCoroutine(NormalChat("주인공", "앨리스, 이상한 나라에서 무슨 일이 벌어지고 있는지 모르니? 여기서 탈출하지 않으면 영원히 갇혀 있을 거야.", 3));
+        yield return StartCoroutine(NormalChat("앨리스", "탈출? 꼭 탈출 해야겠어? 여긴 환상적인 세계라고!\n여기서 즐거운 시간을 보내면 되는거 아니야?", 1));
+        yield return StartCoroutine(NormalChat("주인공", "앨리스, 이상한 나라에서 무슨 일이 벌어지고 있는지 모르니?\n여기서 탈출하지 않으면 영원히 갇혀 있을 거야.", 3));
         yield return StartCoroutine(NormalChat("앨리스", "그럴 리 없어. 원더랜드는 우리의 행복과 자유의 공간일 뿐이야. 탈출할 필요 없어!", 1));
         yield return StartCoroutine(NormalChat("주인공", "앨리스....미안, 하지만 난 이곳을 탈출해야겠어.", 3));
         yield return StartCoroutine(NormalChat("앨리스", "그렇다면 너를 죽여버리겠어.....", 1));
