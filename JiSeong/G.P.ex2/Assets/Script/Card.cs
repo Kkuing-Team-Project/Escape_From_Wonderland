@@ -17,9 +17,10 @@ public class Card : MonoBehaviour
 
             // 이펙트를 생성하고 충돌 지점에 배치
             Instantiate(effectPrefab, transform.position, Quaternion.identity);
+            print("rrr");
 
             // 이펙트 재생이 끝나면 제거
-            Destroy(effectPrefab, 1f);
+            
         }
     }
 

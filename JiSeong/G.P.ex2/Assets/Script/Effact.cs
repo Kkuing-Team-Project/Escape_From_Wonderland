@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class Effact : MonoBehaviour
 {
-    public float deleteTime;
+    private Animator self;
     // Start is called before the first frame update
     void Start()
     {
-        
+        self = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
-    {
-        deleteTime -= Time.deltaTime;
-        if (deleteTime <= 0)
-            Destroy(this.gameObject);
+    { 
+        if (self.GetCurrentAnimatorStateInfo(0).length < self.GetCurrentAnimatorStateInfo(0).normalizedTime)
+        {
+            Destroy(gameObject);
+        }
     }
 }
