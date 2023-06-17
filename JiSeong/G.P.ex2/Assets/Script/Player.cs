@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     public int timeCountNull = 0;
     public int KillCountNull = 0;
     public float distance = 0;
+    public Button jumpBtn;
 
     //public Animation Opening;
     public float PlayerSpeed = 3f;
