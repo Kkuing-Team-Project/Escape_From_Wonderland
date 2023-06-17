@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
 
     public float speed;
     public int PlayerHp = 3;
+    public int card;
+    private float rechargeTimer;
+    public int maxCard = 3;
     private int maxHp = 3;
     public int RabbitHp;
     public int RabbitDmg = 1;
@@ -30,6 +33,7 @@ public class Player : MonoBehaviour
     private bool canMove = true;
 
     float timeImpactTimer = 0f;
+    public float cardTime = 5f;
     float jonyatimer = 0f;
 
     bool eatTime = false;
@@ -83,6 +87,7 @@ public class Player : MonoBehaviour
         hatImage.color = transparentColor;
         timeImage.color = transparentColor;
         UpdateHeartSprites();
+        card = maxCard;  // 시작할 때 최대 아이템 개수로 초기화
     }
 
     private void Update()
@@ -92,11 +97,22 @@ public class Player : MonoBehaviour
             transform.Translate(moveSpeed, 0, 0);
             // animator.SetFloat("DirX", moveSpeed);
             animator.SetBool("Walking", true);
+            
         }
         
 
         if(PlayGame != 0)
         {
+            // 아이템 충전 타이머 갱신
+            rechargeTimer += Time.deltaTime;
+
+            // 5초마다 아이템 충전
+            if (rechargeTimer >= cardTime && card < maxCard)
+            {
+                rechargeTimer = 0f;
+                RechargeItem();
+            }
+
             if (canMove)
             {
                 if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
@@ -107,9 +123,18 @@ public class Player : MonoBehaviour
             }   
             if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("run attack"))
             {
-                animator.SetTrigger("run attack");
-                Instantiate(attack, transform.position, Quaternion.identity);
-                CardCountNull += 1;
+                if (card > 0)
+                {
+                    animator.SetTrigger("run attack");
+                    Instantiate(attack, transform.position, Quaternion.identity);
+                    CardCountNull += 1;
+                    rechargeTimer = 0f;
+                    card--;  // 아이템 개수 감소
+                }
+                else
+                {
+                    Debug.Log("아이템이 없습니다.");
+                }
             }
 
             Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
@@ -119,7 +144,7 @@ public class Player : MonoBehaviour
                 print("�ð� ���");
                 timeImpactTimer = 2;
                 timeCount = 0; ;
-
+                eatTime = false;
                 if (timeCount <= 0)
                 {
                     timeImage.color = transparentColor;
@@ -155,6 +180,12 @@ public class Player : MonoBehaviour
             }
             jonyatimer -= Time.deltaTime;
         }
+    }
+
+    private void RechargeItem()
+    {
+        card++;  // 아이템 개수 증가
+        print("충전");
     }
 
     IEnumerator MoveCoroutine()
