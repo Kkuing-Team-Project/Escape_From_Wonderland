@@ -185,11 +185,11 @@ public class Player : MonoBehaviour
             }
             jonyatimer -= Time.deltaTime;
 
-            if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
+            if (Input.GetKeyDown(KeyCode.Space) &&!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                 print("jump!!");
-                isJumping = true;
+                animator.SetTrigger("Jump");
             }
 
         }
