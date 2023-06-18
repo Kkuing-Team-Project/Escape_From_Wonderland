@@ -37,10 +37,12 @@ public class Player : MonoBehaviour
     float timeImpactTimer = 0f;
     public float cardTime = 5f;
     float jonyatimer = 0f;
+    float jumpTimer = 0f;
    
 
     bool eatTime = false;
     bool defense = false;
+    bool jumping = false;
     bool tea = false;
 
     bool tt = false;
@@ -188,8 +190,18 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) &&!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                jumpTimer = 0.8f;
+                jumping = true;
                 print("jump!!");
                 animator.SetTrigger("Jump");
+            }
+            if (jumpTimer >= 0)
+            {
+                jumpTimer -= Time.deltaTime;
+            }
+            else
+            {
+                jumping = false;
             }
 
         }
@@ -197,36 +209,40 @@ public class Player : MonoBehaviour
 
     private void RechargeItem()
     {
-        card++;  // 아이템 개수 증가
-        print("충전");
+        card++;  // 카드 개수 증가
     }
 
     IEnumerator MoveCoroutine()
     {
         while (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-        {
-            vector.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
-            if (vector.x != 0)
             {
-                vector.y = 0;
-            }
-            animator.SetFloat("DirX", vector.x);
-            animator.SetFloat("DirY", vector.y);
-            animator.SetBool("Walking", true);
+                vector.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
+                if (vector.x != 0)
+                {
+                    vector.y = 0;
+                }
+                animator.SetFloat("DirX", vector.x);
+                animator.SetFloat("DirY", vector.y);
+                animator.SetBool("Walking", true);
 
-            if (vector.x != 0)
-            {
-                transform.Translate(vector.x * speed, 0, 0);
-            }
-            else if (vector.y != 0)
-            {
-                transform.Translate(0, vector.y * speed, 0);
+                if (vector.x != 0)
+                {
+                    transform.Translate(vector.x * speed, 0, 0);
+                }
+                else if (vector.y != 0)
+                {
+                    if(jumping == false)
+                    {
+                        transform.Translate(0, vector.y * speed, 0);
+                    }
+                }
+
+                yield return new WaitForSeconds(0.01f);
+
+                // currentWalkCount = 0;
             }
 
-            yield return new WaitForSeconds(0.01f);
 
-            // currentWalkCount = 0;
-        }
         canMove = true;
         animator.SetBool("Walking", false);
     }
