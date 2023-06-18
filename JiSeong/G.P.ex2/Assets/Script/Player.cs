@@ -188,6 +188,7 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                print("jump!!");
                 isJumping = true;
             }
 

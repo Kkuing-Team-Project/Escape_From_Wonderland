@@ -31,6 +31,7 @@ public class Heart : MonoBehaviour
                 break;
             default:
                 // PlayerHp가 3, 2, 1이 아닌 경우에 대한 처리를 여기에 추가할 수 있습니다.
+                Destroy(gameObject);
                 break;
         }
     }
