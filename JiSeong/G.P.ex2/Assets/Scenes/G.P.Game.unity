@@ -1837,9 +1837,11 @@ MonoBehaviour:
   - -1.61
   - -2.548
   playerTransform: {fileID: 1908673241}
+  III: 0
   timePrefab: {fileID: 1689299114825120811, guid: b7af843c8fae01941b3008f3a6488f06, type: 3}
   hatPrefab: {fileID: 6418484932314254157, guid: 57735bcc8df1905498704c554c4e3094, type: 3}
   teaCupPrefab: {fileID: 1077246077839887278, guid: 13da0c26c0351474b8219e3613bf98d9, type: 3}
+  DownPrefab: {fileID: 8913090567370346942, guid: ac33259aecfda2d4992929cdf8eca34f, type: 3}
 --- !u!4 &786426299
 Transform:
   m_ObjectHideFlags: 0

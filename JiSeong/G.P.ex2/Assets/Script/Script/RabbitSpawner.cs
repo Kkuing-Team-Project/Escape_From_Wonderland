@@ -7,14 +7,17 @@ public class RabbitSpawner : MonoBehaviour
     public GameObject rabbitPrefab; // 토끼 프리팹
     public List<float> tileYPositions; // 타일의 Y값 리스트
     public Transform playerTransform; // Player의 Transform
+    public int III = 0;
 
     public GameObject timePrefab; // Time 프리팹
     public GameObject hatPrefab; // Hat 프리팹
     public GameObject teaCupPrefab; // TeaCup 프리팹
+    public GameObject DownPrefab; // 절벽 프리팹
 
     private void Start()
     {
         StartCoroutine(SpawnRabbitsRepeatedly());
+        III = 1;
     }
 
     IEnumerator SpawnRabbitsRepeatedly()
@@ -26,14 +29,23 @@ public class RabbitSpawner : MonoBehaviour
                 int num = Player.instance.PlayGame;
                 if (num != 0)
                 {
-                    
+                    if (III % 4 != 0)
+                    {
+                        // 토끼를 생성하고 위치를 설정합니다.
+                        float spawnPositionX = playerTransform.position.x + 10f;
+                        SpawnRabbit(spawnPositionX);
 
-                    // 토끼를 생성하고 위치를 설정합니다.
-                    float spawnPositionX = playerTransform.position.x + 10f;
-                    SpawnRabbit(spawnPositionX);
+                        // Time, Hat, TeaCup을 랜덤하게 생성합니다.
+                        SpawnRandomCollectible(spawnPositionX);
+                    }
 
-                    // Time, Hat, TeaCup을 랜덤하게 생성합니다.
-                    SpawnRandomCollectible(spawnPositionX);
+                    else
+                    {
+                        float spawnPositionX = playerTransform.position.x + 10f;
+                        SpawnDown(spawnPositionX);
+                    }
+                    III++;
+                    print(III);
                 }
             }
             yield return new WaitForSeconds(2f); // 2초간 대기
@@ -89,6 +101,11 @@ public class RabbitSpawner : MonoBehaviour
         }
 
     }
+    void SpawnDown(float xPosition)
+    {
+        int randomTileIndex = Random.Range(0, tileYPositions.Count);
+        GameObject down = Instantiate(DownPrefab, new Vector3(xPosition, 0f, 0f), Quaternion.identity);
+    }
 
     private void Update()
     {
@@ -99,6 +116,14 @@ public class RabbitSpawner : MonoBehaviour
             if (rabbit.transform.position.x <= playerTransform.position.x - 10f)
             {
                 Destroy(rabbit);
+            }
+        }
+        GameObject[] downs = GameObject.FindGameObjectsWithTag("Plat");
+        foreach (GameObject down in downs)
+        {
+            if (down.transform.position.x <= playerTransform.position.x - 10f)
+            {
+                Destroy(down);
             }
         }
     }

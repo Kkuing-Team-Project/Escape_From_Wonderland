@@ -383,11 +383,19 @@ public class Player : MonoBehaviour
                 }
             }
             
+            
 
             if (defense == false)
             {
                 Color transparentColor = new Color(1f, 1f, 1f, 0.4f); // ���� ����ϸ� ui����
                 hatImage.color = transparentColor;
+            }
+        }
+        if (collision.gameObject.CompareTag("Plat"))
+        {
+            if (jumping == false)
+            {
+                Die();
             }
         }
         // �������� �浹 ó��
