@@ -45,7 +45,6 @@ public class RabbitSpawner : MonoBehaviour
                         SpawnDown(spawnPositionX);
                     }
                     III++;
-                    print(III);
                 }
             }
             yield return new WaitForSeconds(2f); // 2초간 대기
