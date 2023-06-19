@@ -221,7 +221,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 395414783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.99, y: 0.06, z: 0}
+  m_LocalPosition: {x: -6.54, y: -0.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -477,13 +477,22 @@ MonoBehaviour:
   teaCupImage: {fileID: 0}
   hatImage: {fileID: 0}
   timeImage: {fileID: 0}
+  heart3: {fileID: 0}
+  Card1: {fileID: 0}
+  Card2: {fileID: 0}
+  Card3: {fileID: 0}
+  Card: {fileID: 0}
+  cardUi: {fileID: 0}
   flashColour: {r: 1, g: 0, b: 0, a: 1}
   speed: 0.1
   PlayerHp: 3
+  card: 0
+  maxCard: 3
   RabbitHp: 0
   RabbitDmg: 1
   heartSprites: []
   attack: {fileID: 0}
+  cardTime: 5
   spriter: {fileID: 0}
   CardCountNull: 0
   teaCupCountNull: 0
