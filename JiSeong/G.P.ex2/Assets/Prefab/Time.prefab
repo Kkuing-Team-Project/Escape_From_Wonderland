@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 99774cd0a58f6194d9d5ae8f6b8152b8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 50693a153fc0c6c428c6f44b4b0b5844, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -116,7 +116,7 @@ Transform:
   m_Children:
   - {fileID: 1689299113943729850}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1689299114825120815
 Rigidbody2D:

@@ -763,7 +763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5f988409969074cbe9e03755b54ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: -6, y: 0, z: 0}
+  offset: {x: -7, y: 0, z: 0}
 --- !u!137 &137618865
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -1514,7 +1514,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 99774cd0a58f6194d9d5ae8f6b8152b8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 50693a153fc0c6c428c6f44b4b0b5844, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5433,7 +5433,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6e2cd5298188d134cb113e7bf61d70d5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 168fc702134abd54eb8c3e708bbe1741, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5778,7 +5778,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c9ffe82541b6d4542ab6352a49474fd7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8a2aa44ca563a2f49bba2a9880778c5a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
