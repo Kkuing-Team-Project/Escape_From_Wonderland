@@ -353,6 +353,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f75a81c645af624599127caf621a7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicSource: {fileID: 0}
+  volumeSlider: {fileID: 510362778}
+  canvas: {fileID: 201063501}
 --- !u!1 &184260885
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +523,6 @@ GameObject:
   - component: {fileID: 201063502}
   - component: {fileID: 201063505}
   - component: {fileID: 201063504}
-  - component: {fileID: 201063506}
   m_Layer: 5
   m_Name: SettingsPanel
   m_TagString: Untagged
@@ -588,20 +590,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 201063501}
   m_CullTransparentMesh: 1
---- !u!114 &201063506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201063501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22c51098d70bebd459c1f9494d1e90fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  masterMixer: {fileID: 0}
-  masterLvl: 0
 --- !u!1 &203739202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,10 +1626,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1208757998}
   m_HandleRect: {fileID: 851002890}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 0
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
