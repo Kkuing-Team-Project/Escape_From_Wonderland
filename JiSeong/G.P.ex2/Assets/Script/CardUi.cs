@@ -19,7 +19,7 @@ public class CardUi : MonoBehaviour
     }
     private void Update()
     {
-        switch (player.card)
+       /* switch (player.card)
         {
             case 3:
                 cardUi.sprite = Card3;
@@ -33,6 +33,6 @@ public class CardUi : MonoBehaviour
             default:
                 cardUi.sprite = Card;
                 break;
-        }
+        }*/
     }
 }

@@ -2929,6 +2929,18 @@ MonoBehaviour:
           m_StringArgument: text
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1002030442}
+        m_TargetAssemblyTypeName: CheckData, Assembly-CSharp
+        m_MethodName: STARTBUTTON
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &724030935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4441,6 +4453,7 @@ MonoBehaviour:
   text5: {fileID: 686876405}
   text6: {fileID: 644864913}
   notlogin: 0
+  yeslogin: 0
 --- !u!1 &1036253138
 GameObject:
   m_ObjectHideFlags: 0
@@ -7184,7 +7197,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1573164476}
+      - m_Target: {fileID: 1104425290}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -8325,6 +8338,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1002030442}
         m_TargetAssemblyTypeName: CheckData, Assembly-CSharp
         m_MethodName: SaveGameData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1002030442}
+        m_TargetAssemblyTypeName: CheckData, Assembly-CSharp
+        m_MethodName: LOGINS
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
