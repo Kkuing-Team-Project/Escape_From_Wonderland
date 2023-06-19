@@ -20,12 +20,29 @@ public class CheckData : MonoBehaviour
     public TextMeshProUGUI text6;
 
     public int notlogin;
+    public int yeslogin;
     private int datacheck;
 
-    public void NOTLOGINS()
+    public void LOGINS()
     {
         instance = this;
+        yeslogin = 1;
+    }
+
+    public void STARTBUTTON()
+    {
         notlogin = 1;
+        instance = this;
+        if (yeslogin == 1)
+        {
+            Debug.Log("로그인");
+        }
+        else
+        {
+            yeslogin = 0;
+            Debug.Log("비로그인");
+        }
+           
     }
 
     public void SaveGameData()
