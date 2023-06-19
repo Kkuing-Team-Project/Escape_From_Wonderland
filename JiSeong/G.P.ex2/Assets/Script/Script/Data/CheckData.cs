@@ -23,12 +23,6 @@ public class CheckData : MonoBehaviour
     public int yeslogin;
     private int datacheck;
 
-    /*public void NOTLOGINS()
-    {
-        instance = this;
-        notlogin = 1;
-    }*/
-
     public void LOGINS()
     {
         instance = this;
