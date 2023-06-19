@@ -13,6 +13,14 @@ public class Player : MonoBehaviour
     public Image teaCupImage;
     public Image hatImage;
     public Image timeImage;
+    public Image heart3;
+    // 아이템 카드 이미지들
+    public Sprite Card1;
+    public Sprite Card2;
+    public Sprite Card3;
+    public Sprite Card;
+    public Image cardUi;
+    private Color transparentColor2;
     public Color flashColour = new Color(1f, 0f, 0f, 1f);
 
     public float speed;
@@ -80,7 +88,7 @@ public class Player : MonoBehaviour
         spriter = GetComponent<SpriteRenderer>();
 
         //Opening = GetComponent<Animator>();
-        transform.position = new Vector3(-48.69f, 0f, 0f);
+        transform.position = new Vector3(-44f, 0f, 0f);
 
         /*Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
         damageImage.color = new Color(0f, 0f, 0f, 0f);*/
@@ -120,7 +128,35 @@ public class Player : MonoBehaviour
                 rechargeTimer = 0f;
                 RechargeItem();
             }
+            switch (card)
+            {
+                case 1:
+                    transparentColor2 = new Color(1f, 1f, 1f, 0.6f);
+                    cardUi.sprite = Card1;
+                    break;
+                case 2:
+                    transparentColor2 = new Color(1f, 1f, 1f, 0.8f);
+                    cardUi.sprite = Card2;
+                    break;
+                case 3:
+                    transparentColor2 = new Color(1f, 1f, 1f, 1f);
+                    cardUi.sprite = Card3;
+                    break;
+                default:
+                    transparentColor2 = new Color(1f, 1f, 1f, 0.4f);
+                    cardUi.sprite = Card;
+                    break;
+            }
 
+            // 카드 투명도 조절
+            if (rechargeTimer < cardTime)
+            {
+                cardUi.color = transparentColor2;
+            }
+            else
+            {
+                cardUi.color = Color.white; // 충전 완료 후 투명도 초기화
+            }
             if (canMove)
             {
                 if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
@@ -432,8 +468,8 @@ public class Player : MonoBehaviour
         distance = transform.position.x; // Get the x position of the player
 
         // game_data.csv ���� ���
-        int num = CheckData.instance.notlogin;
-        if (num != 1)
+        int num = CheckData.instance.yeslogin;
+        if (num == 1)
         {
             string id = CheckData.instance.idInputField.text;
             string FilePath = Path.Combine(Application.dataPath, "UserData/");
