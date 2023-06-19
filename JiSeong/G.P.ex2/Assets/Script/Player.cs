@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
 
     bool tt = false;
 
+
     private Collider2D coll;
     public SpriteRenderer spriter;
     private Rigidbody2D rb;
