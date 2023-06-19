@@ -13,16 +13,6 @@ public class Player : MonoBehaviour
     public Image teaCupImage;
     public Image hatImage;
     public Image timeImage;
-
-    // 기존에 존재하는 이미지
-    public Image heart3;
-    // 아이템 카드 이미지들
-    public Sprite Card1;
-    public Sprite Card2;
-    public Sprite Card3;
-    public Sprite Card;
-    public Image cardUi;
-
     public Color flashColour = new Color(1f, 0f, 0f, 1f);
 
     public float speed;
@@ -78,7 +68,7 @@ public class Player : MonoBehaviour
     //public Animation Opening;
     public float PlayerSpeed = 3f;
     public int PlayGame = 0;
-    private Color transparentColor2;
+
 
     private void Start()
     {
@@ -89,7 +79,10 @@ public class Player : MonoBehaviour
         spriter = GetComponent<SpriteRenderer>();
 
         //Opening = GetComponent<Animator>();
-        transform.position = new Vector3(-44f, 0f, 0f);
+        transform.position = new Vector3(-48.69f, 0f, 0f);
+
+        /*Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
+        damageImage.color = new Color(0f, 0f, 0f, 0f);*/
 
         Image damageImage = GameObject.Find("effect").GetComponent<Image>();
         damageImage.color = new Color(0f, 0f, 0f, 0f); 
@@ -113,8 +106,9 @@ public class Player : MonoBehaviour
             animator.SetBool("Walking", true);
             
         }
+        
 
-        if (PlayGame != 0)
+        if(PlayGame != 0)
         {
             // 아이템 충전 타이머 갱신
             rechargeTimer += Time.deltaTime;
@@ -125,35 +119,6 @@ public class Player : MonoBehaviour
                 rechargeTimer = 0f;
                 RechargeItem();
             }
-            switch (card)
-            {
-                case 1:
-                    transparentColor2 = new Color(1f, 1f, 1f, 0.6f);
-                    cardUi.sprite = Card1;
-                    break;
-                case 2:
-                    transparentColor2 = new Color(1f, 1f, 1f, 0.8f);
-                    cardUi.sprite = Card2;
-                    break;
-                case 3:
-                    transparentColor2 = new Color(1f, 1f, 1f, 1f);
-                    cardUi.sprite = Card3;
-                    break;
-                default:
-                    transparentColor2 = new Color(1f, 1f, 1f, 0.4f);
-                    cardUi.sprite = Card;
-                    break;
-            }
-
-            // 카드 투명도 조절
-            if (rechargeTimer < cardTime)
-            {
-                cardUi.color = transparentColor2;
-            }
-            else
-            {
-                cardUi.color = Color.white; // 충전 완료 후 투명도 초기화
-            }  
 
             if (canMove)
             {
@@ -162,8 +127,7 @@ public class Player : MonoBehaviour
                     canMove = false;
                     StartCoroutine(MoveCoroutine());
                 }
-            }
-
+            }   
             if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("run attack"))
             {
                 if (card > 0)
@@ -171,6 +135,7 @@ public class Player : MonoBehaviour
                     animator.SetTrigger("run attack");
                     Instantiate(attack, transform.position, Quaternion.identity);
                     CardCountNull += 1;
+                    rechargeTimer = 0f;
                     card--;  // 아이템 개수 감소
                 }
                 else
@@ -179,7 +144,7 @@ public class Player : MonoBehaviour
                 }
             }
 
-            Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
+                Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
 
             if (eatTime && Input.GetKeyDown(KeyCode.E))
             {
@@ -213,7 +178,7 @@ public class Player : MonoBehaviour
                 print("���� ���");
                 Heal(1);
                 teaCupCount = 0;
-
+                
                 if (teaCupCount <= 0)
                 {
                     teaCupImage.color = transparentColor;
@@ -222,7 +187,7 @@ public class Player : MonoBehaviour
             }
             jonyatimer -= Time.deltaTime;
 
-            if (Input.GetKeyDown(KeyCode.Space) && !animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+            if (Input.GetKeyDown(KeyCode.Space) &&!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                 jumpTimer = 0.8f;
@@ -233,12 +198,14 @@ public class Player : MonoBehaviour
             if (jumpTimer >= 0)
             {
                 jumpTimer -= Time.deltaTime;
+                transform.position += Vector3.right * Time.deltaTime * 6;
             }
             else
             {
                 jumping = false;
             }
-        }   
+            
+        }
     }
 
     private void RechargeItem()
@@ -249,7 +216,7 @@ public class Player : MonoBehaviour
     IEnumerator MoveCoroutine()
     {
         while (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-        {
+            {
                 vector.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
                 if (vector.x != 0)
                 {
@@ -261,7 +228,10 @@ public class Player : MonoBehaviour
 
                 if (vector.x != 0)
                 {
-                    transform.Translate(vector.x * speed, 0, 0);
+                    if (jumping == false)
+                    {
+                        transform.Translate(vector.x * speed, 0, 0);
+                    }
                 }
                 else if (vector.y != 0)
                 {
@@ -274,8 +244,7 @@ public class Player : MonoBehaviour
                 yield return new WaitForSeconds(0.01f);
 
                 // currentWalkCount = 0;
-        }
-
+            }
 
         canMove = true;
         animator.SetBool("Walking", false);
@@ -342,6 +311,9 @@ public class Player : MonoBehaviour
             teaCupCountNull += 1; // ���� Ƚ��
             teaCupImage.color = new Color(1f, 1f, 1f, 1f); // ���� �̹����� ������� �ٲ���
         }
+
+
+
 
         if (tt == false)
         {
@@ -459,8 +431,8 @@ public class Player : MonoBehaviour
         distance = transform.position.x; // Get the x position of the player
 
         // game_data.csv ���� ���
-        int num = CheckData.instance.yeslogin;
-        if (num == 1)
+        int num = CheckData.instance.notlogin;
+        if (num != 1)
         {
             string id = CheckData.instance.idInputField.text;
             string FilePath = Path.Combine(Application.dataPath, "UserData/");
