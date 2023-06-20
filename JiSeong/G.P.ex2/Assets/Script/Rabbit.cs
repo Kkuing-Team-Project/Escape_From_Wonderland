@@ -17,4 +17,11 @@ public class Rabbit : MonoBehaviour
     {
         rb.velocity = new Vector2(-3, rb.velocity.y);
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Plat"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }
