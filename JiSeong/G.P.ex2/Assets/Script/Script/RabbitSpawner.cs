@@ -41,7 +41,7 @@ public class RabbitSpawner : MonoBehaviour
 
                     else
                     {
-                        float spawnPositionX = playerTransform.position.x + 10f;
+                        float spawnPositionX = playerTransform.position.x + 15f;
                         SpawnDown(spawnPositionX);
                     }
                     III++;
