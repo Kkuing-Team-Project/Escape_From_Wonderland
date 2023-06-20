@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Alice2 : MonoBehaviour
-{ 
+{
     private Transform spaceshipTransform;
     public Vector3 offset;
     private Animator animator;
@@ -15,13 +15,12 @@ public class Alice2 : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(3);
-
-            animator.SetInteger("AttackIndex", Random.Range(0, 2));
+            animator.SetInteger("AttackIndex", Random.Range(0, 1));
             animator.SetTrigger("Attack");
         }
     }
-    // Update is called once per frame
-    void Update()
+
+    private void Update()
     {
         if (spaceshipTransform != null)
         {
@@ -30,7 +29,6 @@ public class Alice2 : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Player")

@@ -78,14 +78,16 @@ public class Player : MonoBehaviour
     public float PlayerSpeed = 3f;
     public int PlayGame = 0;
 
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     public AudioClip soundClip; // 재생할 사운드 클립
 
-    private AudioSource audioSource2;
+    public AudioSource audioSource2;
     public AudioClip soundClip2; // 재생할 사운드 클립
 
-    private int NUM;
+    public AudioSource audioSource3;
+    public AudioClip soundClip3; // 재생할 사운드 클립
 
+    private int NUM;
 
     private void Awake()
     {
@@ -126,7 +128,7 @@ public class Player : MonoBehaviour
         }
         
 
-        if(PlayGame != 0)
+        if(PlayGame == 1)
         {
             // 아이템 충전 타이머 갱신
             rechargeTimer += Time.deltaTime;
@@ -383,6 +385,8 @@ public class Player : MonoBehaviour
 
                     else
                     {
+                        NUM = 2;
+                        PlaySound();
                         Destroy(collision.gameObject);
                         TakeDamage(RabbitDmg);
                         ActivateDamageImage();
@@ -519,6 +523,11 @@ public class Player : MonoBehaviour
         if (NUM == 0){
             audioSource2.clip = soundClip2;
             audioSource2.Play();
+        }
+        if (NUM == 2){
+            audioSource3.clip = soundClip3;
+            audioSource3.Play();
+            print("dd");
         }
     }
 }

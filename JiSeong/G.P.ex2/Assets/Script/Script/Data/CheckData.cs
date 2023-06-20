@@ -122,7 +122,7 @@ public class CheckData : MonoBehaviour
                     data.Add(values);
                 }
 
-                if (data.Count >= 5 && data[0].Length >= 6) // Ensure at least 6 rows and 6 columns are available
+                if (data.Count >= 6 && data[0].Length >= 6) // Ensure at least 6 rows and 6 columns are available
                 {
                     // Find the highest value in each column (0 to 5)
                     string highestValue0 = FindHighestNumericValueInColumn(data, 0);

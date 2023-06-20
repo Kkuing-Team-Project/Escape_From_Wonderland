@@ -8,11 +8,11 @@ public class Card : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {   
-        if (collision.CompareTag("Rabbit") && gameObject.CompareTag("Card"))
+        if (collision.CompareTag("Rabbit"))
         {
             Player.instance.KillCountNull++;
             Destroy(collision.gameObject);
-            StartCoroutine(DestroyAfterDelay(1f));
+            StartCoroutine(DestroyAfterDelay(0.1f));
 
             Instantiate(effectPrefab, transform.position, Quaternion.identity);
         }
@@ -23,7 +23,7 @@ public class Card : MonoBehaviour
     {
         Vector3 pos = Camera.main.ViewportToWorldPoint(new Vector3(1, 1));
         Vector3 P = this.gameObject.transform.position;
-        transform.position += Vector3.right * Time.deltaTime * 12;
+        transform.position += Vector3.right * Time.deltaTime * 14;
         transform.Rotate(0, 0, 90);
 
         if (pos.x < P.x)
