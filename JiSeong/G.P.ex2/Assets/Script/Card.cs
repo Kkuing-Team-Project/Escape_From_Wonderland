@@ -4,22 +4,17 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    public GameObject effectPrefab; // ÀÌÆåÆ® ÇÁ¸®ÆÕÀ» ÇÒ´çÇÏ±â À§ÇÑ º¯¼ö
+    public GameObject effectPrefab; // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò´ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {   
-        if (collision.CompareTag("Rabbit"))
+        if (collision.CompareTag("Rabbit") && gameObject.CompareTag("Card"))
         {
             Player.instance.KillCountNull++;
-
             Destroy(collision.gameObject);
-            Destroy(gameObject);
+            StartCoroutine(DestroyAfterDelay(1f));
 
-            // ÀÌÆåÆ®¸¦ »ý¼ºÇÏ°í Ãæµ¹ ÁöÁ¡¿¡ ¹èÄ¡
             Instantiate(effectPrefab, transform.position, Quaternion.identity);
-
-            // ÀÌÆåÆ® Àç»ýÀÌ ³¡³ª¸é Á¦°Å
-            
         }
     }
 
@@ -30,10 +25,16 @@ public class Card : MonoBehaviour
         Vector3 P = this.gameObject.transform.position;
         transform.position += Vector3.right * Time.deltaTime * 12;
         transform.Rotate(0, 0, 90);
+
         if (pos.x < P.x)
         {
             Destroy(gameObject);
         }
     }
 
+    IEnumerator DestroyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); // delayì´ˆ ë™ì•ˆ ëŒ€ê¸°
+        Destroy(gameObject); // GameObject íŒŒê´´
+    }
 }

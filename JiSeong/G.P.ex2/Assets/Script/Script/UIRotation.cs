@@ -12,6 +12,14 @@ public class UIRotation : MonoBehaviour
     private bool objectsActive = false;
     public float rotationSpeed = 100f;
 
+    private AudioSource audioSource;
+    public AudioClip soundClip; // 재생할 사운드 클립
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void Start()
     {
         // 초기에는 objectA, objectB, objectC를 비활성화
@@ -29,7 +37,14 @@ public class UIRotation : MonoBehaviour
             // ESC 키를 누르면 활성화 또는 비활성화 상태를 토글
             objectsActive = !objectsActive;
             SetObjectsActive(objectsActive);
+            PlaySound();
         }
+    }
+
+    private void PlaySound()
+    {
+        audioSource.clip = soundClip;
+        audioSource.Play();
     }
 
     private void RotateObject(GameObject obj, float speed)

@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
     private bool isJumping = false;
     private float jumpForce = 5f;
-    public Card attack;
+    public GameObject attack;
 
     private Vector3 vector;
     private Animator animator;
@@ -78,6 +78,21 @@ public class Player : MonoBehaviour
     public float PlayerSpeed = 3f;
     public int PlayGame = 0;
 
+    private AudioSource audioSource;
+    public AudioClip soundClip; // 재생할 사운드 클립
+
+    private AudioSource audioSource2;
+    public AudioClip soundClip2; // 재생할 사운드 클립
+
+    private int NUM;
+
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource2 = GetComponent<AudioSource>();
+    }
+
 
     private void Start()
     {
@@ -87,16 +102,11 @@ public class Player : MonoBehaviour
         coll = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
 
-        //Opening = GetComponent<Animator>();
         transform.position = new Vector3(-44f, 0f, 0f);
-
-        /*Image damageImage = GameObject.Find("Damge").GetComponent<Image>();
-        damageImage.color = new Color(0f, 0f, 0f, 0f);*/
 
         Image damageImage = GameObject.Find("effect").GetComponent<Image>();
         damageImage.color = new Color(0f, 0f, 0f, 0f); 
 
-        // TeaCup, Hat, Time �̹����� 70% �������ϰ� ����
         Color transparentColor = new Color(1f, 1f, 1f, 0.4f);
 
         teaCupImage.color = transparentColor;
@@ -111,7 +121,6 @@ public class Player : MonoBehaviour
         if (PlayGame == 0) {
             float moveSpeed = PlayerSpeed * Time.deltaTime;
             transform.Translate(moveSpeed, 0, 0);
-            // animator.SetFloat("DirX", moveSpeed);
             animator.SetBool("Walking", true);
             
         }
@@ -128,6 +137,7 @@ public class Player : MonoBehaviour
                 rechargeTimer = 0f;
                 RechargeItem();
             }
+
             switch (card)
             {
                 case 1:
@@ -169,6 +179,8 @@ public class Player : MonoBehaviour
             {
                 if (card > 0)
                 {
+                    NUM = 1;
+                    PlaySound();
                     animator.SetTrigger("run attack");
                     Instantiate(attack, transform.position, Quaternion.identity);
                     CardCountNull += 1;
@@ -185,7 +197,6 @@ public class Player : MonoBehaviour
 
             if (eatTime && Input.GetKeyDown(KeyCode.E))
             {
-                print("�ð� ���");
                 timeImpactTimer = 2;
                 timeCount = 0; ;
                 eatTime = false;
@@ -212,7 +223,6 @@ public class Player : MonoBehaviour
 
             if (tea && Input.GetKeyDown(KeyCode.R))
             {
-                print("���� ���");
                 Heal(1);
                 teaCupCount = 0;
                 
@@ -226,10 +236,11 @@ public class Player : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space) &&!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
             {
+                NUM = 0;
+                PlaySound();
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                 jumpTimer = 0.8f;
                 jumping = true;
-                print("jump!!");
                 animator.SetTrigger("Jump");
             }
             if (jumpTimer >= 0)
@@ -354,7 +365,6 @@ public class Player : MonoBehaviour
 
         if (tt == false)
         {
-            // ����� �浹 ó��
             if (collision.gameObject.CompareTag("Rabbit"))
             {
                 if (jonyatimer > 0)
@@ -369,7 +379,6 @@ public class Player : MonoBehaviour
 
                         defense = false;
                         hatCount = 0;
-                        print("���ڻ��");
                     }
 
                     else
@@ -377,7 +386,6 @@ public class Player : MonoBehaviour
                         Destroy(collision.gameObject);
                         TakeDamage(RabbitDmg);
                         ActivateDamageImage();
-                        print("����");
                     }
                     jonyatimer = 0.1f;
                 }
@@ -500,5 +508,17 @@ public class Player : MonoBehaviour
     private void Finish()
     {
         SceneManager.LoadScene("Finish");
+    }
+
+    private void PlaySound()
+    {
+        if (NUM == 1){
+            audioSource.clip = soundClip;
+            audioSource.Play();
+        }
+        if (NUM == 0){
+            audioSource2.clip = soundClip2;
+            audioSource2.Play();
+        }
     }
 }
