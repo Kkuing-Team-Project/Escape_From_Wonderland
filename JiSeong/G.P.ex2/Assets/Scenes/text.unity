@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 249699033}
   - component: {fileID: 249699036}
   - component: {fileID: 249699035}
-  - component: {fileID: 249699034}
   - component: {fileID: 249699037}
   m_Layer: 5
   m_Name: Panel
@@ -169,21 +168,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &249699034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 249699032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f75a81c645af624599127caf621a7c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
-  volumeSlider: {fileID: 0}
-  canvas: {fileID: 0}
 --- !u!114 &249699035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,8 +447,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 249699034}
-        m_TargetAssemblyTypeName: WargameSystem.MenuSystem.MainUIManager, Assembly-CSharp
+      - m_Target: {fileID: 249699037}
+        m_TargetAssemblyTypeName: WargameSystem.MenuSystem.SettingsUIManager, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:

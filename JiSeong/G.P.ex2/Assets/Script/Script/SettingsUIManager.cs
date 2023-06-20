@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace WargameSystem.MenuSystem
 {
@@ -16,6 +17,16 @@ namespace WargameSystem.MenuSystem
 
         private void Start()
         {
+            if (musicSource != null)
+            {
+                // 음악 소스가 할당된 경우에만 초기화
+                musicSource.Play();
+            }
+            else
+            {
+                Debug.LogError("음악 오디오 소스가 할당되지 않았습니다.");
+            }
+            
             // 슬라이더의 초기값 설정
             volumeSlider.value = musicSource.volume;
 
@@ -58,6 +69,10 @@ namespace WargameSystem.MenuSystem
             isGamePaused = false;
         }
 
+        public void ChangeScene(string name){
+            SceneManager.LoadScene(name);
+        }
+
         public void SetFullScreen(bool isFullScreen)
         {
             Screen.fullScreen = isFullScreen; // Screen size setting
@@ -71,7 +86,14 @@ namespace WargameSystem.MenuSystem
         public void SetVolume(float volume)
         {
             // 슬라이더 값을 음악 소스의 볼륨에 적용
-            musicSource.volume = volume;
+            if (musicSource != null)
+            {
+                musicSource.volume = volume;
+            }
+            else
+            {
+                Debug.LogError("음악 오디오 소스가 할당되지 않았습니다.");
+            }
         }
     }
 }

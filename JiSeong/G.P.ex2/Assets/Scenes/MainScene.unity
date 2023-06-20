@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f75a81c645af624599127caf621a7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
+  musicSource: {fileID: 1362389428}
   volumeSlider: {fileID: 510362778}
   canvas: {fileID: 201063501}
 --- !u!1 &184260885
