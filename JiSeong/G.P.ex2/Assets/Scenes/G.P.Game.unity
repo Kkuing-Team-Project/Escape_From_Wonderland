@@ -3183,7 +3183,7 @@ PrefabInstance:
     - target: {fileID: 1060121148014993301, guid: f7ea4382f6e361440a896a21451bfade, type: 3}
       propertyPath: soundClip3
       value: 
-      objectReference: {fileID: 8300000, guid: 662fcc12483ff4ce2952a3232f0abb04, type: 3}
+      objectReference: {fileID: 8300000, guid: 8a1a3237753cb7847beeecf898833bf8, type: 3}
     - target: {fileID: 1060121148014993301, guid: f7ea4382f6e361440a896a21451bfade, type: 3}
       propertyPath: PlayerSpeed
       value: 6
@@ -5691,9 +5691,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 662fcc12483ff4ce2952a3232f0abb04, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8a1a3237753cb7847beeecf898833bf8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.45
   m_Pitch: 1
   Loop: 0
   Mute: 0
